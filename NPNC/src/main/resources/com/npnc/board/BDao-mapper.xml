@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.npnc.board.dao.BDao">
+  <select id="getList" resultType="com.npnc.board.dto.BDto" parameterType="HashMap">
+  	select b.*, good.cnt AS good, reply.repcnt AS replyCnt FROM board as b 
+  	LEFT outer join (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = true) AS good ON b.idx = good.idx 
+  	left outer join (SELECT bidx, COUNT(bidx) AS repcnt FROM reply GROUP BY bidx) AS reply ON b.idx = reply.bidx
+  	<where>
+    <if test="param.category != null">
+        AND category = #{param.category}
+    </if> 
+    <if test="param.type != null and param.type!=''">
+       AND ${param.type} like CONCAT('%',#{param.keyword},'%')
+    </if>
+  </where>
+	order by idx desc limit #{param.page},#{param.pagesize}
+  </select>
+  
+  <select id="getCnt" resultType="int" parameterType="HashMap">
+  	select count(*) from board
+  	<where>
+    <if test="param.category != null">
+        AND category = #{param.category}
+    </if> 
+    <if test="param.type != null and param.type!=''">
+       AND ${param.type} like CONCAT('%',#{param.keyword},'%')
+    </if>
+  </where>
+  </select>
+  
+  <select id="getGradeList" resultType="com.npnc.board.dto.GDto">
+  	select * from grade
+  </select>
+  
+  <select id="getCategoryList" resultType="com.npnc.board.dto.CDto">
+  	select * from category
+  </select>
+  
+  <insert id="write" parameterType="com.npnc.board.dto.BDto">
+  	insert into board values(null,#{dto.title},#{dto.id},#{dto.content},default,default,#{dto.file},#{dto.category},#{dto.savedfile})
+  </insert>
+  
+  <select id="read" resultType="com.npnc.board.dto.BDto">
+  	select b.*, good.cnt AS good,bad.cnt AS bad, reply.repcnt AS replyCnt FROM board as b 
+  	LEFT outer join (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = true) AS good ON b.idx = good.idx 
+  		LEFT outer join (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = false) AS bad ON b.idx = bad.idx
+  	left outer join (SELECT bidx, COUNT(bidx) AS repcnt FROM reply GROUP BY bidx) AS reply ON b.idx = reply.bidx WHERE b.idx = #{idx}
+  </select>
+  
+  <select id="getReplyList" resultType="com.npnc.board.dto.RDto">
+  	select * from reply where bidx = #{idx}
+  </select>
+  
+  <insert id="insertReply" parameterType="com.npnc.board.dto.RDto">
+  	insert into reply values(null,#{rdto.bidx},#{rdto.id},#{rdto.content},default)
+  </insert>
+</mapper>
