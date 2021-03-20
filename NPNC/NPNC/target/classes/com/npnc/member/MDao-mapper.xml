@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.npnc.member.dao.MDao">
+  <select id="isMember" resultType="com.npnc.member.dto.MDto">
+  	select * from member where id = #{id} and pw = #{pw}
+  </select>
+  <select id="findId" resultType="String" parameterType="HashMap">
+  	select id from member 
+  	where name = #{param.name} and idnum = #{param.idnum}
+  		<if test="param.email != null">
+  			and ${param.email} = ${param.email}
+  		</if>
+  		<if test="param.phonenum != null">
+  			and ${param.phonenum} = ${param.phonenum}
+  		</if>
+  </select>
+  <select id="findPw" resultType="int" parameterType="HashMap">
+  	select count(*) from member where id = #{param.id} and idnum = #{param.idnum} and phonenum = #{param.phonenum}
+  </select>
+  <select id="changePw" resultType="int" >
+  	update member set pw= #{pw} where id= #{id}
+  </select>
+  <insert id="legMember" parameterType="com.npnc.member.dto.MDto">
+  	INSERT INTO MEMBER VALUES(#{dto.id},#{dto.pw},#{dto.name},#{dto.idnum},#{dto.email},#{dto.address},#{dto.phonenum},default)
+  	</insert>
+  <select id="getInfo"  resultType="com.npnc.member.dto.MDto">
+  	select * from member where id = #{id}
+  </select>
+  <update id="update"  parameterType="com.npnc.member.dto.MDto">
+  	update member set pw=#{dto.pw} , email=#{dto.email} , address=#{dto.address}, phonenum=#{dto.phonenum} where id=#{dto.id}
+  </update>
+  <delete id="delmember">
+  	delete from member where id= #{id}
+  </delete>
+</mapper>
