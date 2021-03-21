@@ -12,6 +12,11 @@
 		alert("탈퇴가 정상처리 되었습니다");
 	</script>
 </c:if>
+<c:if test="${delete}">
+	<script>
+		alert("게시글이 삭제되었습니다");
+	</script>
+</c:if>
 <title>Insert title here</title>
 <link
     rel="stylesheet"

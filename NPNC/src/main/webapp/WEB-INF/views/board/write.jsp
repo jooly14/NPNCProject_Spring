@@ -215,13 +215,15 @@ Map<String,Vector<CDto>> map2 = (Map<String,Vector<CDto>>)request.getAttribute("
 
 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-/* 특정 카테고리에서 게시글 쓰기를 선택한 경우 카테고리select의 값도 해당 카테고리가 선택되게 함*/
-var category_idx = $("option[value='${category}']").text();
-if(category_idx==""){
-	 $("option").eq(0).attr("selected",true);
-}else{
-	 $("option[value='${category}']").attr("selected",true);
-}
+$(function(){
+	/* 특정 카테고리에서 게시글 쓰기를 선택한 경우 카테고리select의 값도 해당 카테고리가 선택되게 함*/
+	var category_idx = $("option[value='${category}']").text();
+	if(category_idx==""){
+		 $("option").eq(0).attr("selected",true);
+	}else{
+		 $("option[value='${category}']").attr("selected",true);
+	}
+});
 </script>
 </body>
 </html>

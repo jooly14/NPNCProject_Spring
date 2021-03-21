@@ -29,6 +29,6 @@
 </nav>
 <script>
 	function managerPage(){
-		location.href = "manage?cmd=blist";
+		location.href = "/manage/blist";
 	}
 </script>

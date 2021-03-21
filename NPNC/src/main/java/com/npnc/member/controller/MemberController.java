@@ -42,7 +42,7 @@ public class MemberController{
 		if(result != null) {
 			session.setAttribute("id", result.getId());
 			session.setAttribute("pw", result.getPw());
-			session.setAttribute("grade", result.getGrade());
+			session.setAttribute("grade", result.getUsergrade());
 			return "redirect:/";
 		}else {
 			model.addAttribute("denied",true);

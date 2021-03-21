@@ -8,7 +8,7 @@ public class MDto {
 	private String email;
 	private String address;
 	private String phonenum;
-	private int grade;
+	private int usergrade;
 	
 	public String getId() {
 		return id;
@@ -52,10 +52,10 @@ public class MDto {
 	public void setPhonenum(String phonenum) {
 		this.phonenum = phonenum;
 	}
-	public int getGrade() {
-		return grade;
+	public int getUsergrade() {
+		return usergrade;
 	}
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public void setUsergrade(int usergrade) {
+		this.usergrade = usergrade;
 	}
 }

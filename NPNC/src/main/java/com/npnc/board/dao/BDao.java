@@ -20,4 +20,14 @@ public interface BDao {
 	public BDto read(@Param("idx") int idx);
 	public List<RDto> getReplyList(@Param("idx") int idx);
 	public int insertReply(@Param("rdto") RDto rdto);
+	public int updateReply(@Param("rdto") RDto rdto);
+	public int deleteReply(@Param("rdto") RDto rdto);
+	public int delete(@Param("idx") int idx);
+	public int update(@Param("dto") BDto dto);
+	public void upHit(@Param("idx") int idx);
+	public Integer doGob(@Param("idx") int idx,@Param("id") String id);
+	public void insertGob(@Param("param") HashMap<String, Object> param);
+	public void updateGob(@Param("param") HashMap<String, Object> param);
+	public void deleteGob(@Param("param") HashMap<String, Object> param);
+	public BDto getGob(@Param("idx") int idx);
 }

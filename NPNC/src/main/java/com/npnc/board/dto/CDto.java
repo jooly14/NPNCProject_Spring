@@ -6,19 +6,29 @@ public class CDto {
 	private String name;	//카테고리 이름
 	private int readgrade;	//읽기 권한
 	private int writegrade;	//쓰기 권한
+	private int cnt;		//카테고리 게시글 개수
 	
 	public CDto() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public CDto(int idx, String maincategory, String name, int readgrade, int writegrade) {
+	
+	public CDto(int idx, String maincategory, String name, int readgrade, int writegrade, int cnt) {
 		this.idx = idx;
 		this.maincategory = maincategory;
 		this.name = name;
 		this.readgrade = readgrade;
 		this.writegrade = writegrade;
+		this.cnt = cnt;
 	}
-	
+
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 
 	public String getMaincategory() {
 		return maincategory;

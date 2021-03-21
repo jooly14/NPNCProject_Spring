@@ -102,4 +102,63 @@ public class BoardServiceImpl implements BoardService {
 		List<RDto> result = dao.getReplyList(idx);
 		return result;
 	}
+	public List<RDto> updateReply(int ridx,int idx,String id, String content){
+		RDto rdto = new RDto(ridx, idx, id, content, null);
+		dao.updateReply(rdto);
+		List<RDto> result = dao.getReplyList(idx);
+		return result;
+	}
+	public List<RDto> deleteReply(int idx,int ridx,String id){
+		RDto rdto = new RDto(ridx, idx, id, null, null);
+		dao.deleteReply(rdto);
+		List<RDto> result = dao.getReplyList(idx);
+		return result;
+	}
+	
+	public int delete(int idx) {
+		int result = dao.delete(idx);
+		return result;
+	}
+	
+	public int update(BDto dto) {
+		int result = dao.update(dto);
+		return result;
+	}
+	
+	public void upHit(int idx) {
+		dao.upHit(idx);
+	}
+	
+	public Map<String, Object> doGob(int idx,String id){
+		Integer goodbad = dao.doGob(idx, id);
+		Map<String, Object> result = new HashMap<>();
+		result.put("goodbad", goodbad);
+		return result;
+	}
+	public BDto insertGob(int idx, String id, boolean gob) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("idx", idx);
+		param.put("id", id);
+		param.put("gob", gob);
+		dao.insertGob(param);
+		BDto gbresult = dao.getGob(idx);
+		return gbresult;
+	}
+	public BDto updateGob(int idx, String id, boolean gob) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("idx", idx);
+		param.put("id", id);
+		param.put("gob", gob);
+		dao.updateGob(param);
+		BDto gbresult = dao.getGob(idx);
+		return gbresult;
+	}
+	public BDto deleteGob(int idx, String id) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("idx", idx);
+		param.put("id", id);
+		dao.deleteGob(param);
+		BDto gbresult = dao.getGob(idx);
+		return gbresult;
+	}
 }

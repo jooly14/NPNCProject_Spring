@@ -13,4 +13,13 @@ public interface BoardService {
 	public int write(BDto dto);
 	public Map<String, Object> read(int idx);
 	public List<RDto> insertReply(int idx,String id, String content);
+	public List<RDto> updateReply(int ridx,int idx,String id, String content);
+	public List<RDto> deleteReply(int idx,int ridx,String id);
+	public int delete(int idx);
+	public int update(BDto dto);
+	public void upHit(int idx);
+	public Map<String, Object> doGob(int idx,String id);
+	public BDto insertGob(int idx, String id, boolean gob);
+	public BDto deleteGob(int idx, String id);
+	public BDto updateGob(int idx, String id, boolean gob);
 }

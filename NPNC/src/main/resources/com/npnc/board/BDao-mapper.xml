@@ -56,4 +56,45 @@
   <insert id="insertReply" parameterType="com.npnc.board.dto.RDto">
   	insert into reply values(null,#{rdto.bidx},#{rdto.id},#{rdto.content},default)
   </insert>
+  
+  <insert id="updateReply" parameterType="com.npnc.board.dto.RDto">
+  	update reply set content = #{rdto.content} where ridx = #{rdto.ridx} and id = #{rdto.id}
+  </insert>
+  
+  <delete id="deleteReply" parameterType="com.npnc.board.dto.RDto">
+  	delete from reply where ridx = #{rdto.ridx} and id = #{rdto.id}
+  </delete>
+  
+  <delete id="delete">
+  	delete from board where idx = #{idx}
+  </delete>
+  
+  <update id="update" parameterType="com.npnc.board.dto.BDto">
+  	update board set title = #{dto.title} , content = #{dto.content} , file = #{dto.file} , savedfile = #{dto.savedfile}, category = #{dto.category} where idx = #{dto.idx} and id = #{dto.id}
+  </update>
+  
+  <update id="upHit">
+  	update board set hit = hit + 1 where idx = #{idx}
+  </update>
+  
+  <select id="doGob" resultType="Integer">
+  	select gob from gob where id = #{id} and idx = #{idx}
+  </select>
+  
+  <insert id="insertGob" parameterType="HashMap">
+  	insert into gob values(#{param.idx},#{param.id},#{param.gob})
+  </insert>
+  
+  <update id="updateGob" parameterType="HashMap">
+  	update gob set gob = #{param.gob} where id = #{param.id} and idx = #{param.idx}
+  </update>
+  
+  <delete id="deleteGob" parameterType="HashMap">
+  	delete from gob where idx = #{param.idx} and id = #{param.id}
+  </delete>
+  
+  <select id="getGob" resultType="com.npnc.board.dto.BDto">
+  	SELECT b.*,good.cnt AS good ,bad.cnt AS bad FROM (SELECT #{idx} AS idx) AS b LEFT OUTER JOIN (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = TRUE) AS good ON b.idx = good.idx 
+  		LEFT outer join (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = false) AS bad ON b.idx = bad.idx
+  </select>
 </mapper>
