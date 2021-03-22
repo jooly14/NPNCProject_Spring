@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<div style="width:1080px;margin:0 auto 70px;">
-	<div id="ajax-blist" style="margin-left:280px;">
+	<div id="ajax-blist" style="margin-left:240px;">
 		
 	</div>
 	</div>
 	<script  src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 	<script>
 		$(function(){
 			ajaxFnc();
@@ -16,7 +15,7 @@
 			
 			function ajaxFnc() {
 				var startRownumParam ="";
-					startRownumParam = "&idx="+"${idx}"+"&category="+"${category}";
+					startRownumParam = "idx="+"${dto.idx}"+"&category="+"${category}";
 				if($(this).text()==""){
 				}else{
 					startRownumParam += "&startRownum=";
@@ -30,10 +29,10 @@
 						startRownumParam += (((Number($(this).text())-1)*5));
 					}
 				}
-				var params = "cmd=ablist"+startRownumParam;
+				var params = startRownumParam;
 				$.ajax({
 					type:"post",
-					url:"<%=request.getContextPath()%>/ajax",
+					url:"/board/rblist",
 					data:params,
 					dataType:"json",
 					success:function(data){
@@ -41,7 +40,7 @@
 						var pagesize = data.pagesize;
 						var rownum = data.rownum;
 						var startRownum = data.startRownum;
-						var dtos = JSON.parse(data['dtos']);
+						var dtos = data.dtos;
 						var curpage = data.curpage;
 						var totalpage = data.totalpage;
 						start = data.start;
@@ -52,12 +51,12 @@
 							var td1 = $("<td></td>");
 							td1.append(dtos[i].idx);
 							tr.append(td1);
-							var td2 = $("<td></td>");
+							var td2 = $("<td style='width:75%;'></td>");
 							var a1 = $("<a></a>");
 							if(dtos[i].idx=="${idx}"){
 								a1.css('font-weight','bold');
 							}
-							a1.attr('href','<%=request.getContextPath()%>/board?cmd=bread&idx='+dtos[i].idx+"${empty category?' ':'&catetory='}"+"${category}");
+							a1.attr('href','/board/read?idx='+dtos[i].idx+"${empty category?' ':'&catetory='}"+"${category}");
 							a1.append(dtos[i].title);
 							td2.append(a1);
 							tr.append(td2);

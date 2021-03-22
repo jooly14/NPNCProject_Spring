@@ -9,6 +9,11 @@
 	alert("로그인 정보가 잘못되었습니다");
 	</script>
 </c:if>
+<c:if test="${grade == 100}">
+	<script>
+	alert("계정이 정지되었습니다");
+	</script>
+</c:if>
 <meta charset="UTF-8">
 <title>로그인</title>
     <style>

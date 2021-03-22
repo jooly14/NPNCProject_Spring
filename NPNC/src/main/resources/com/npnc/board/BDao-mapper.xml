@@ -61,12 +61,18 @@
   	update reply set content = #{rdto.content} where ridx = #{rdto.ridx} and id = #{rdto.id}
   </insert>
   
-  <delete id="deleteReply" parameterType="com.npnc.board.dto.RDto">
-  	delete from reply where ridx = #{rdto.ridx} and id = #{rdto.id}
+  <delete id="deleteReply" parameterType="HashMap">
+  	delete from reply where ridx = #{param.ridx}
+  	<if test="param.grade != 0">
+  	 	and id = #{param.id}
+  	</if>  	
   </delete>
   
-  <delete id="delete">
-  	delete from board where idx = #{idx}
+  <delete id="delete" parameterType="HashMap">
+  	delete from board where idx = #{param.idx}
+  	<if test="param.grade != 0">
+  	 	and id = #{param.id}
+  	</if>  	
   </delete>
   
   <update id="update" parameterType="com.npnc.board.dto.BDto">
@@ -96,5 +102,28 @@
   <select id="getGob" resultType="com.npnc.board.dto.BDto">
   	SELECT b.*,good.cnt AS good ,bad.cnt AS bad FROM (SELECT #{idx} AS idx) AS b LEFT OUTER JOIN (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = TRUE) AS good ON b.idx = good.idx 
   		LEFT outer join (SELECT idx,gob,COUNT(id) AS cnt FROM gob GROUP BY idx, gob HAVING gob = false) AS bad ON b.idx = bad.idx
+  </select>
+  
+  <select id="getARowCnt" parameterType="HashMap" resultType="int">
+  	SELECT rownum FROM (SELECT @rownum :=@rownum+1 AS rownum , b.idx FROM (SELECT @rownum:=0) AS r, board AS b
+  	<if test="param.category != null">
+		WHERE b.category = #{param.category}
+  	</if>
+	ORDER BY idx DESC) AS tmp WHERE tmp.idx = #{param.idx}
+  </select>
+  
+  <select id="getAList" parameterType="HashMap" resultType="com.npnc.board.dto.BDto">
+  	SELECT * FROM (SELECT @rownum :=@rownum+1 AS rownum , b.* FROM (SELECT @rownum:=0) AS r, board AS b
+  	<if test="param.category != null">
+		WHERE b.category = #{param.category}
+  	</if>
+	ORDER BY idx DESC) AS tmp WHERE tmp.rownum &lt;= #{param.endRownum} AND tmp.rownum &gt; #{param.startRownum}
+  </select>
+  
+  <select id="getATotalCnt" parameterType="HashMap" resultType="int">
+  	SELECT max(@rownum :=@rownum+1) AS totalcnt FROM (SELECT @rownum:=0) AS r, board AS b 
+  	<if test="param.category != null">
+		WHERE b.category = #{param.category}
+  	</if>
   </select>
 </mapper>

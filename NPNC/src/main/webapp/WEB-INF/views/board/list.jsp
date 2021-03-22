@@ -49,7 +49,7 @@
 			<table class="list-table">
 				<tr>
 					<td>글 번호</td>
-					<td>제목</td>
+					<td style="width:60%;">제목</td>
 					<td>작성자</td>
 					<td>작성일</td>
 					<td>조회</td>

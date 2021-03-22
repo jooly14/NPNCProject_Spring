@@ -67,7 +67,7 @@
                 <span class="name">아이디</span><br>
                 <input type="text" name="id" value ="${dto.id}" readonly><br>
                 <span class="name">비밀번호</span><br>
-                <input type="text" name="pw" value="${dto.pw}"><br>
+                <input type="password" name="pw" value="${dto.pw}"><br>
                 <span class="name">이름</span><br>
                 <input type="text" name="name" value="${dto.name}" readonly><br>              
                 <span class="name">이메일</span><br>

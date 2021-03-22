@@ -52,7 +52,7 @@
                 <span class="name">아이디</span><br>
                 <input type="text" name="id"><br>
                 <span class="name">비밀번호</span><br>
-                <input type="text" name="pw"><br>
+                <input type="password" name="pw"><br>
                 <span class="name">이름</span><br>
                 <input type="text" name="name"><br>
                 <span class="name">주민등록번호</span><br>

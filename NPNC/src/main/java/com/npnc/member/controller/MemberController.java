@@ -21,7 +21,8 @@ public class MemberController{
 	private MemberService service;
 	
 	@RequestMapping("/login")
-	public void login() {	
+	public String login() {
+		return "/member/login";
 	}
 	@RequestMapping("/leg")
 	public void leg() {	
@@ -40,6 +41,10 @@ public class MemberController{
 	public String doLogin(String id, String pw,HttpSession session,Model model) {
 		MDto result  = service.login(id, pw);
 		if(result != null) {
+			if(result.getUsergrade()==100) {
+				model.addAttribute("grade", result.getUsergrade());
+				return "member/login";
+			}
 			session.setAttribute("id", result.getId());
 			session.setAttribute("pw", result.getPw());
 			session.setAttribute("grade", result.getUsergrade());

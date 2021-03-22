@@ -35,15 +35,23 @@
 	">
         <article id="read-head">
            
-            <div>
-                <a href="/board/list?category=${category}" class="board-title" style="color: #03c75a"></a><br>
-                <span class="content-title" style="font-size: 20px;">&nbsp;${dto.title}</span>
+            <div class="dto-header">
+                <a href="/board/list?category=${category}" class="board-title" style="color: #03c75a"></a>
             </div>
-            
-            <div>
-                <span class="id" style="font-weight: bold;">&nbsp;${dto.id}</span><br>
-                <span><span style="color:lightgray;">&nbsp;${dto.regdate}</span>&nbsp;|&nbsp;조회수&nbsp;&nbsp;${dto.hit}&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 1?'font-weight:bold':''}">좋아요&nbsp;&nbsp;<span style="color:red">${dto.good}</span></a>&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 0?'font-weight:bold':''}">싫어요&nbsp;&nbsp;<span style="color:blue">${dto.bad}</span></a></span>
+            <div class="dto-header">
+                <span class="content-title" style="font-size: 20px;">${dto.title}</span>
             </div>
+            <div class="dto-header">
+                <span class="id" style="font-weight: bold; padding-left:2px">${dto.id}</span>
+            </div>
+            <div class="dto-header">
+                <span style="color:lightgray;">${dto.regdate}</span>&nbsp;|&nbsp;조회수&nbsp;&nbsp;${dto.hit}&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 1?'font-weight:bold':''}">좋아요&nbsp;&nbsp;<span style="color:red">${dto.good}</span></a>&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 0?'font-weight:bold':''}">싫어요&nbsp;&nbsp;<span style="color:blue">${dto.bad}</span></a></span>
+            </div>
+                <c:if test="${!empty dto.file}">
+            <div class="dto-header">
+	                <span>첨부파일&nbsp;&nbsp;|&nbsp;&nbsp;<a href="${uploadpath}/${dto.savedfile}" download="${dto.file}">${dto.file}</a></span>
+			</div>
+                </c:if>
             
             <div class="content">
                 <textarea style="resize: none;" readonly >${dto.content}</textarea>
@@ -88,6 +96,9 @@
 			            			<button class="reply-update">수정</button>
 			            			<button class="reply-del ${reply1.ridx}">삭제</button>
 			            		</c:if>
+			            		<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
+			            			<button class="reply-del ${reply1.ridx}">삭제</button>
+			            		</c:if>
 		            	</div>
             </c:forEach>
             
@@ -112,21 +123,19 @@
         
         <!-- 수정 삭제, 게시글의 작성자 아이디와, 로그인세션 ID값 검사하여 보여줌. -->
         <div id="btns">
-        <c:choose>
-        	<c:when test="${sessionScope.id eq dto.id}">
-		        <button id="btn-edit" onclick="location.href='/board/update?idx=${dto.idx}'">수정</button>
-		        <button id="btn-del">삭제</button>
-		        
-    		</c:when>
-    		<c:otherwise>
-    		</c:otherwise>
-    	</c:choose>
+       	<c:if test="${sessionScope.id eq dto.id}">
+	        <button id="btn-edit" onclick="location.href='/board/update?idx=${dto.idx}'">수정</button>
+	        <button id="btn-del">삭제</button>
+   		</c:if>
+    	<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
+         	<button id="btn-del">삭제</button>
+    	</c:if>
     	<button id="btn-list"  onclick="location.href='/board/list?category=${category}'">목록</button>
     	</div>
     </article>
     </div>
     </section>
-   <%--  <%@ include file="/view/board/ajax_blist.jsp" %> --%>
+   	<%@ include file="ajax_blist.jsp" %>
 	<%@ include file="../common/footer.jsp" %>
 </div>
 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -147,10 +156,11 @@
 		/*카테고리 이름 가져오기 */
 		 var read_category = $("#cidx-${category}").text();
 		 if(read_category==""){
-			 $(".board-title").html("&nbsp;&nbsp;>");
+			 $(".board-title").html("&nbsp;>");
 		 }else{
-			 $(".board-title").html("&nbsp;"+read_category+"&nbsp;>");
+			 $(".board-title").html(read_category+"&nbsp;>");
 		 }
+		 
 		 $("#btn-del").click(function(){
 			if(confirm("게시글을 삭제하시겠습니까?")){
 				location.href = "/board/delete?idx="+${dto.idx}+"&category="+${category};

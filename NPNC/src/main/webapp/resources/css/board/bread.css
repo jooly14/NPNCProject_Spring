@@ -66,7 +66,7 @@
 		}
 		#ajax-blist{
 			border-top: 1px solid black;
-			width:74%;
+			width:78%;
 		}
 		#ajax-blist .blist-btn{
 		    color:black;
@@ -78,4 +78,8 @@
 		}
 		#ajax-blist .blist-btn:hover{
 			text-decoration:underline;
+		}
+		.dto-header{
+			padding-left:5px;
+			margin-bottom: 2px;
 		}

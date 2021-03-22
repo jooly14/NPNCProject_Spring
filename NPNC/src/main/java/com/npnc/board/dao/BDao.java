@@ -21,8 +21,8 @@ public interface BDao {
 	public List<RDto> getReplyList(@Param("idx") int idx);
 	public int insertReply(@Param("rdto") RDto rdto);
 	public int updateReply(@Param("rdto") RDto rdto);
-	public int deleteReply(@Param("rdto") RDto rdto);
-	public int delete(@Param("idx") int idx);
+	public int deleteReply(@Param("param") HashMap<String, Object> param);
+	public int delete(@Param("param") HashMap<String, Object> param);
 	public int update(@Param("dto") BDto dto);
 	public void upHit(@Param("idx") int idx);
 	public Integer doGob(@Param("idx") int idx,@Param("id") String id);
@@ -30,4 +30,7 @@ public interface BDao {
 	public void updateGob(@Param("param") HashMap<String, Object> param);
 	public void deleteGob(@Param("param") HashMap<String, Object> param);
 	public BDto getGob(@Param("idx") int idx);
+	public int getARowCnt(@Param("param") HashMap<String, Object> param);
+	public List<BDto> getAList(@Param("param") HashMap<String, Object> param);
+	public int getATotalCnt(@Param("param") HashMap<String, Object> param);
 }

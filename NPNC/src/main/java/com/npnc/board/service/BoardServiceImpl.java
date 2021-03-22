@@ -108,15 +108,24 @@ public class BoardServiceImpl implements BoardService {
 		List<RDto> result = dao.getReplyList(idx);
 		return result;
 	}
-	public List<RDto> deleteReply(int idx,int ridx,String id){
-		RDto rdto = new RDto(ridx, idx, id, null, null);
-		dao.deleteReply(rdto);
+	public List<RDto> deleteReply(int idx,int ridx,String id,int grade){
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("ridx", ridx);
+		param.put("id", id);
+		param.put("grade", grade);
+		dao.deleteReply(param);
 		List<RDto> result = dao.getReplyList(idx);
 		return result;
 	}
 	
-	public int delete(int idx) {
-		int result = dao.delete(idx);
+	public int delete(int idx,String id,int grade) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("idx", idx);
+		param.put("id", id);
+		param.put("grade", grade);
+		System.out.println(grade);
+		int result = dao.delete(param);
+		System.out.println(result);
 		return result;
 	}
 	
@@ -160,5 +169,32 @@ public class BoardServiceImpl implements BoardService {
 		dao.deleteGob(param);
 		BDto gbresult = dao.getGob(idx);
 		return gbresult;
+	}
+	
+	public Map<String, Object> getAjaxBlist(Integer idx, Integer startRownum, Integer category, Integer pagesize) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("idx", idx);
+		param.put("category", category);
+		int rownum = -1;
+		if(startRownum == null){		//제일 처음 페이지 로딩시 조회 할때
+			rownum = dao.getARowCnt(param);			//해당 idx의 게시글이 몇번째에 있는 게시글인지 알아내기(게시글이 있는 위치의 리스트를 보여주기 위해서 필요)
+			startRownum = (rownum/5)*5;						//게시글을 rownum 1~5,6~10,11~15 이런식으로 보여주기 위해서 startrownum 사용
+			if(rownum%5==0){ 
+				startRownum = (rownum/5-1)*5;
+			}
+		}
+		param.put("startRownum", startRownum);
+		param.put("endRownum", startRownum + pagesize);
+		
+		List<BDto> dtos = dao.getAList(param);				//글 목록 가져오기
+		int totalcnt = dao.getATotalCnt(param);
+		
+		Map<String , Object> map = new HashMap<String, Object>();
+		map.put("dtos", dtos);
+		map.put("totalcnt", totalcnt);
+		map.put("startRownum", startRownum);
+		map.put("rownum", rownum);
+		
+		return map;
 	}
 }

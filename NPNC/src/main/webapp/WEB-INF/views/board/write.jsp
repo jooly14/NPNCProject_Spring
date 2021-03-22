@@ -43,10 +43,10 @@ Map<String,Vector<CDto>> map2 = (Map<String,Vector<CDto>>)request.getAttribute("
 %>
 <div id="content">
 <form action="/board/doWrite" method="post" enctype="multipart/form-data">
-<table>
+<table style="width:100%;">
 	<tr>
 		<td>
-			<select name="category">
+			<select name="category" style="width:100%;">
 			
 			<%
 				if(session.getAttribute("grade")!=null){
@@ -209,7 +209,7 @@ Map<String,Vector<CDto>> map2 = (Map<String,Vector<CDto>>)request.getAttribute("
 </form>
 </div>
 </section>
-
+	<%@ include file="../common/footer.jsp" %>
 </div>
 
 

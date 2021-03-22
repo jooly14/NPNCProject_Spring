@@ -2,10 +2,8 @@ package com.npnc.board.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +29,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.npnc.board.dto.BDto;
 import com.npnc.board.dto.RDto;
 import com.npnc.board.service.BoardService;
-import com.npnc.board.service.BoardServiceImpl;
-import com.npnc.member.dto.MDto;
 
 @Controller
 @RequestMapping({"/","/board"})
@@ -103,6 +98,7 @@ public class BoardController {
 			data = service.doGob(idx,(String)session.getAttribute("id"));
 			model.addAllAttributes(data);
 		}
+		model.addAttribute("uploadpath", uploadpath);
 		return "board/read";
 	}
 	@RequestMapping("/update")
@@ -171,8 +167,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(int idx, int category,RedirectAttributes rAttr) {
-		int result = service.delete(idx);
+	public String delete(int idx, int category,RedirectAttributes rAttr,HttpSession session) {
+		int result = service.delete(idx,(String)session.getAttribute("id"),(int)session.getAttribute("grade"));
 		if(result == 1) {
 			rAttr.addFlashAttribute("category", category);
 			rAttr.addFlashAttribute("delete", true);
@@ -202,7 +198,7 @@ public class BoardController {
 	@ResponseBody
 	public Map<String, Object> deleteReply(int ridx,int bidx,HttpSession session) {
 		HashMap<String, Object> map = new HashMap<>();
-		List<RDto> newR = service.deleteReply(bidx,ridx,(String)session.getAttribute("id"));
+		List<RDto> newR = service.deleteReply(bidx,ridx,(String)session.getAttribute("id"),(int)session.getAttribute("grade"));
 		map.put("newR", newR);
 		return map;
 	}
@@ -234,6 +230,33 @@ public class BoardController {
 		BDto gbresult = service.deleteGob(idx,(String)session.getAttribute("id"));
 		map.put("gbresult", gbresult);
 		map.put("dogob", "delete");
+		return map;
+	}
+	@RequestMapping("/rblist")
+	@ResponseBody
+	public Map<String, Object> getAjaxBlist(Integer idx,Integer startRownum, Integer category) {
+		int pagesize = 5;								//한 페이지당 보여줄 게시글 개수
+		Map<String, Object> result = service.getAjaxBlist(idx,startRownum,category,pagesize);
+		int curpage = (Integer)result.get("startRownum")/5+1;												//현재페이지(페이징  위해서)
+		int totalpage = (Integer)result.get("totalcnt")/pagesize;		//전체 게시글 개수/한 페이지 당 게시글 개수 = 전체 페이지 개수
+		if((Integer)result.get("totalcnt")%pagesize!=0){				//나머지가 있는 경우에는 한 페이지 더 필요
+			totalpage++;
+		}
+		int pagelistsize = 5;					//페이징:페이지리스트(게시글리스트 하단에 있는 페이지링크를 의미) 한번에 보여지는 페이지 개수(총페이지 개수가 이를 초과하면 다음버튼이 생성됨)
+		int start = (curpage/pagelistsize)*pagelistsize+1;	//페이지리스트에 시작하는 숫자
+		if(curpage%pagelistsize==0){
+			start = (curpage/pagelistsize-1)*pagelistsize+1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pagesize", pagesize);
+		map.put("rownum", result.get("rownum"));
+		map.put("startRownum", result.get("startRownum"));
+		map.put("dtos", result.get("dtos"));	//객체를 json객체로 변경해주는 Gson - jar를 따로 추가했음
+		map.put("curpage", curpage);
+		map.put("totalpage", totalpage);
+		map.put("start", start);
+		map.put("end", start+pagelistsize-1);
 		return map;
 	}
 }
