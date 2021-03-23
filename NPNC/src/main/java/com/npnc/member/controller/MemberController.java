@@ -66,8 +66,8 @@ public class MemberController{
 	      return "member/tryfind";
 	}
 	@RequestMapping("/doFindpw")
-	public String doFindpw(String name,String phonenum,String idnum,Model model) {
-		int result = service.findPw(name,phonenum,idnum);
+	public String doFindpw(String id,String phonenum,String idnum,Model model) {
+		int result = service.findPw(id,phonenum,idnum);
 		if(result==1) {
 			return "member/changepw";
 		}else {

@@ -1,12 +1,10 @@
 package com.npnc.board.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-
-import javax.sound.midi.Soundbank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,7 +58,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	public Map<String, Object> getGradeList(){
 		List<GDto> result_ = dao.getGradeList();
-		HashMap<Integer, String> result = new HashMap<>();
+		HashMap<Integer, String> result = new LinkedHashMap<>();
 		for(GDto g: result_) {
 			result.put(g.getGrade(), g.getName());
 		}
@@ -114,6 +112,11 @@ public class BoardServiceImpl implements BoardService {
 		param.put("id", id);
 		param.put("grade", grade);
 		dao.deleteReply(param);
+		List<RDto> result = dao.getReplyList(idx);
+		return result;
+	}
+	@Override
+	public List<RDto> getReplyList(int idx) {
 		List<RDto> result = dao.getReplyList(idx);
 		return result;
 	}
@@ -197,4 +200,5 @@ public class BoardServiceImpl implements BoardService {
 		
 		return map;
 	}
+	
 }

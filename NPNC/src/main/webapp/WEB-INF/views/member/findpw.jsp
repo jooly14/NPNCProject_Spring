@@ -86,7 +86,7 @@
 					</tr>
 					<tr>
 						<td>주민등록번호</td>
-						<td><input type="text" name="idnum"></td>
+						<td><input type="password" name="idnum"></td>
 					</tr>
 					<tr>
 						<td>휴대전화</td>

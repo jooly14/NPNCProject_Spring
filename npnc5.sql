@@ -1,3 +1,4 @@
+DROP DATABASE npnc;
 CREATE database npnc DEFAULT CHARACTER SET utf8 COLLATE UTF8_GENERAL_CI;
 USE npnc;
 CREATE TABLE member( -- 회원정보  테이블 
@@ -357,3 +358,8 @@ INSERT INTO reply VALUES(NULL,124,'test222','동의합니다',DEFAULT);
 ALTER TABLE board ADD COLUMN savedfile VARCHAR(100);
 ALTER TABLE board change savedfile savedfile VARCHAR(255);
 ALTER TABLE board change file file VARCHAR(255);
+
+INSERT INTO grade VALUES(99,'전체공개');
+ALTER TABLE member ADD FOREIGN KEY (usergrade) REFERENCES grade(grade);
+ALTER TABLE category ADD FOREIGN KEY (readgrade) REFERENCES grade(grade);
+ALTER TABLE category ADD FOREIGN KEY (writegrade) REFERENCES grade(grade);

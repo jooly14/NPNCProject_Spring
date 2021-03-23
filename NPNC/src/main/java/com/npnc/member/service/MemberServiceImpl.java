@@ -27,9 +27,9 @@ public class MemberServiceImpl implements MemberService {
 		String id = dao.findId(param);
 		return id;
 	}
-	public int findPw(String name,String phonenum,String idnum) {
+	public int findPw(String id,String phonenum,String idnum) {
 		HashMap<String, Object> param = new HashMap<>();
-		param.put("name", name);
+		param.put("id", id);
 		param.put("phonenum", phonenum);
 		param.put("idnum", idnum);
 		int result = dao.findPw(param);

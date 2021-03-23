@@ -55,7 +55,9 @@
 					<td style="text-align:center;width:100px;">
 					<select class="ajax-sel">
 					<c:forEach var="g" items="${grades}">
+						<c:if test="${g.key!=99}">
 							<option value="${g.key}" ${d.usergrade==g.key?'selected':''}>${g.value}</option>
+						</c:if>
 					</c:forEach>
 					</select>
 					</td>

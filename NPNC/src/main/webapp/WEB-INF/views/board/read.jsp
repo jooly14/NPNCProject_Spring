@@ -184,13 +184,28 @@
 		 });
 		 
 		 $(document).on("click",".reply_update_cancel",function(){
-				 var text = $(this).prev().prev().val();
+			/* 	 var text = $(this).prev().prev().val();
 			 if($(this).parent().next().next().next().text()=="new  "){
 				 $(this).parent().next().next().next().after(reply_update_btn.clone());
 			 }else{
 				 $(this).parent().next().next().after(reply_update_btn.clone());
 			 }
-				 $(this).parent().html(text);
+				 $(this).parent().html(text); */
+			 var params = "bidx=${dto.idx}";
+				$.ajax({
+					type:"post",
+					url:"/board/getReplyList",
+					data:params,
+					dataType:"json",
+					success:function(data){
+						var newR = data.newR;
+						updateNewReply(newR);
+					},
+					error:function(request,status,error){
+					    alert("작업 실패");
+					 }
+
+				});
 		 });
 		 $(document).on("click",".reply_update_ok",function(){
 			 var ridx = 0;

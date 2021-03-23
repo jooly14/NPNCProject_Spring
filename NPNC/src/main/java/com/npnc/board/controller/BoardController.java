@@ -193,6 +193,14 @@ public class BoardController {
 		map.put("newR", newR);
 		return map;
 	}
+	@RequestMapping("/getReplyList")
+	@ResponseBody
+	public Map<String, Object> getReplyList(int bidx,HttpSession session) {
+		HashMap<String, Object> map = new HashMap<>();
+		List<RDto> newR = service.getReplyList(bidx);
+		map.put("newR", newR);
+		return map;
+	}
 	
 	@RequestMapping("/deleteReply")
 	@ResponseBody

@@ -47,7 +47,7 @@
                <td><h4>새로운 비밀번호를 입력하세요</h4></td>            
             </tr>
             <tr>
-               <td><input type="text" name="pw"></td>
+               <td><input type="password" name="pw"></td>
             </tr>
             <tr>
                <td><input type="submit" value="확인"></td>

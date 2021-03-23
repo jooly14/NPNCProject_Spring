@@ -15,6 +15,7 @@ public interface BoardService {
 	public List<RDto> insertReply(int idx,String id, String content);
 	public List<RDto> updateReply(int ridx,int idx,String id, String content);
 	public List<RDto> deleteReply(int idx,int ridx,String id,int grade);
+	public List<RDto> getReplyList(int idx);
 	public int delete(int idx,String id,int grade);
 	public int update(BDto dto);
 	public void upHit(int idx);

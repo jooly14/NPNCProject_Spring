@@ -84,14 +84,13 @@
 								<option value="${g.key}" ${readg==g.key?'selected':''}>${g.value}</option>
 							</c:if>
 						</c:forEach>
-						<option value="99" ${readg==99?'selected':''}>전체공개</option>
 						</select>
 						</td>
 						<td style="text-align:center;width:100px;">
 						<select class="ajax-selw">
 						<c:set var="writeg" value="<%=e.getValue().get(i).getWritegrade()%>"></c:set>
 						<c:forEach var="g" items="${requestScope.grades}">
-							<c:if test="${g.key!=100}">
+							<c:if test="${g.key!=100 && g.key!=99}">
 								<option value="${g.key}" ${writeg==g.key?'selected':''}>${g.value}</option>
 							</c:if>
 						</c:forEach>
@@ -151,7 +150,7 @@
 		$(document).on("click",".add-cate",function(){
 			var tr1 = $("<tr></tr>");
 			var td1 = $("<td></td>");
-			var td2 = $("<td><input type='text' name='name'></td>");
+			var td2 = $("<td><input type='text' name='name' placeholder='카테고리 이름'></td>");
 			var td22 = $("<td style='text-align:center;width:100px;'><select name='readgrade'></select></td>");
 			var td23 = $("<td style='text-align:center;width:100px;'><select name='writegrade'></select></td>");
 			var td3 = $("<td colspan='2' style='text-align:center;'><input class='addbtn' type='button' value='카테고리 추가'></td>");
@@ -165,17 +164,15 @@
 				var key1 = '${e.key}';
 				op1.text(value1);
 				op1.val(key1);
-				if(key1=='100'){
-					op1.attr("selected",true);
-					op1.val("99");
-					op1.text("전체공개");
-				}
+				if(key1!='100'){
 					td22.children().eq(0).append(op1);
 					var op2 =  op1.clone();
 					if(!(op2.val()=='99')){
 						td23.children().eq(0).append(op2);
 					}
+				}
 			</c:forEach>
+			td22.children().eq(0).children().last().attr("selected",true);
 			td23.children().eq(0).children().last().attr("selected",true);
 			td1.append(h1);
 			tr1.append(td1);
@@ -204,8 +201,8 @@
 		/* 메인카테고리 추가 버튼 누르면 새로운 입력 행 생성하고 버튼은 사라짐 */
 		$(document).on("click",".add-mainc",function(){
 			var tr1 = $("<tr></tr>");
-			var td1 = $("<td><input style='width:120px;' type='text' name='maincategory'></td>");
-			var td2 = $("<td><input type='text' name='name'></td>");
+			var td1 = $("<td><input style='width:120px;' type='text' name='maincategory' placeholder='대분류 이름'></td>");
+			var td2 = $("<td><input type='text' name='name' placeholder='카테고리 이름'></td>");
 			var td22 = $("<td style='text-align:center;'><select name='readgrade'></select></td>");
 			var td23 = $("<td style='text-align:center;'><select name='writegrade'></select></td>");
 			var td3 = $("<td colspan='2' style='text-align:center;'><input class='addMbtn' type='button' value='대분류 추가'></td>");
@@ -218,17 +215,15 @@
 				var key1 = '${e.key}';
 				op1.text(value1);
 				op1.val(key1);
-				if(key1=='100'){
-					op1.attr("selected",true);
-					op1.val("99");
-					op1.text("전체공개");
-				}
+				if(key1!='100'){
 					td22.children().eq(0).append(op1);
 					var op2 =  op1.clone();
 					if(!(op2.val()=='99')){
 						td23.children().eq(0).append(op2);
 					}
+				}
 			</c:forEach>
+			td22.children().eq(0).children().last().attr("selected",true);
 			td23.children().eq(0).children().last().attr("selected",true);
 			tr1.append(td1);
 			tr1.append(td2);

@@ -68,6 +68,7 @@ public class ManageController {
 			}
 			del_idxs += ","+del_idx[i];
 		}
+		System.out.println(page+"/"+pagesize);
 		int result = service.onepassdelete(del_idxs);
 		if(type!=null&&!type.isEmpty()){
 			rAttr.addAttribute("type",type);

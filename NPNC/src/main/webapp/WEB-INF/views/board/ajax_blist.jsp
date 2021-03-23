@@ -53,7 +53,7 @@
 							tr.append(td1);
 							var td2 = $("<td style='width:75%;'></td>");
 							var a1 = $("<a></a>");
-							if(dtos[i].idx=="${idx}"){
+							if(dtos[i].idx=="${dto.idx}"){
 								a1.css('font-weight','bold');
 							}
 							a1.attr('href','/board/read?idx='+dtos[i].idx+"${empty category?' ':'&catetory='}"+"${category}");

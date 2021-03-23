@@ -89,7 +89,7 @@
 			<form id="fm1" action="/manage/onepassdel" method="post">
 			<input type="hidden" name="type" value="${type}">
 			<input type="hidden" name="keyword" value="${keyword}">
-			<input type="hidden" name="psize" value="${psize}">
+			<input type="hidden" name="psize" value="${pagesize}">
 			<input type="hidden" name="page" value="${page}">
 			<input type="hidden" name="category" value="${category}">
 			<table class="list-table">
