@@ -1,5 +1,9 @@
 package com.npnc.member.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.annotations.Param;
@@ -8,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.npnc.board.dto.RDto;
 import com.npnc.member.dao.MDao;
 import com.npnc.member.dto.MDto;
 import com.npnc.member.service.MemberService;
@@ -35,6 +41,9 @@ public class MemberController{
 	}
 	@RequestMapping("/del_mem_pop")
 	public void del_mem_pop(){
+	}
+	@RequestMapping("/chgpw_pop")
+	public void chgpw_pop(){
 	}
 	
 	@RequestMapping("/doLogin")
@@ -69,6 +78,7 @@ public class MemberController{
 	public String doFindpw(String id,String phonenum,String idnum,Model model) {
 		int result = service.findPw(id,phonenum,idnum);
 		if(result==1) {
+			model.addAttribute("id",id);
 			return "member/changepw";
 		}else {
 			model.addAttribute("denied",true);
@@ -92,19 +102,40 @@ public class MemberController{
 		model.addAttribute("dto", result);
 	}
 	@RequestMapping("/update")
-	public String update(MDto dto,RedirectAttributes rAttr) {
+	public String update(MDto dto,HttpSession session,RedirectAttributes rAttr) {
+		dto.setId((String)session.getAttribute("id"));
 		int result = service.update(dto);
 		rAttr.addFlashAttribute("result", true);
 		return "redirect:/member/mypage";
 	}
+
 	@RequestMapping("/delmember")
-	public String delmember(HttpSession session, RedirectAttributes rAttr) {
-		int result = service.delmember((String)session.getAttribute("id"));
+	@ResponseBody
+	public Map<String, Object> delmember(HttpSession session,String pw) {
+		HashMap<String, Object> map = new HashMap<>();
+		int result = service.delmember((String)session.getAttribute("id"),pw);
 		if(result==1) {
-			rAttr.addFlashAttribute("delmember", true);
+			session.invalidate();
 		}
-		session.invalidate();
-		return "redirect:/board/";
+		map.put("result", result);
+		return map;
+	}
+	@RequestMapping("/chkId")
+	@ResponseBody
+	public Map<String, Object> chkId(String id) {
+		HashMap<String, Object> map = new HashMap<>();
+		int result = service.chkId(id);
+		map.put("result", result);
+		return map;
+	}
+	
+	@RequestMapping("/chgpw")
+	@ResponseBody
+	public Map<String, Object> chgpw(String oldpw,String newpw,HttpSession session) {
+		HashMap<String, Object> map = new HashMap<>();
+		int result = service.chgpw((String)session.getAttribute("id"),oldpw,newpw);
+		map.put("result", result);
+		return map;
 	}
 	
 	

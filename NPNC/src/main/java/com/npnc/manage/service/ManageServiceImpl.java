@@ -70,6 +70,7 @@ public class ManageServiceImpl implements ManageService {
 		param.put("page", (page-1)*pagesize);
 		param.put("pagesize", pagesize);
 		List<MDto> dtos = dao.getMemberList(param);
+	
 		int totalCnt = dao.getMemberCnt(param);
 		int totalpage = totalCnt/pagesize;		//전체 게시글 개수/한 페이지 당 게시글 개수 = 전체 페이지 개수
 		if(totalCnt%pagesize!=0){				//나머지가 있는 경우에는 한 페이지 더 필요

@@ -47,13 +47,13 @@
                <td><h4>새로운 비밀번호를 입력하세요</h4></td>            
             </tr>
             <tr>
-               <td><input type="password" name="pw"></td>
+               <td><input type="password" name="pw" maxlength="15"></td>
             </tr>
             <tr>
                <td><input type="submit" value="확인"></td>
             </tr>
          </table>
-         <input type="hidden" name="id" value=${id}>
+         <input type="hidden" name="id" value="${id}">
       </form>
    </div>
 </body>

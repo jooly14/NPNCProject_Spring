@@ -24,7 +24,7 @@
 	    padding-left: 4px;
 	    border: 1px solid lightgray;
 	}
-	#del,#cancel{
+	#del,#cancel,#closebtn{
 		width: 80px;
 	    height: 30px;
 	    background-color: white;
@@ -41,31 +41,58 @@
 </head>
 <body>
 <div id="wrap">
+<form id="fm1" onsubmit="return false;">
 	<table>
 		<tr>
 			<td colspan="2">정말 탈퇴를 진행하시겠습니까?</td>
 		</tr>
 		<tr>
-			<td colspan="2"><input id="chk" type="password" placeholder="비밀번호를 입력해주세요"></td>
+			<td colspan="2"><input id="pw" name="pw" type="password" placeholder="비밀번호를 입력해주세요"></td>
 		</tr>
 		<tr>
 			<td><input id="del" type="button" value="탈퇴"></td>
 			<td><input id="cancel" type="button" value="취소" onclick="window.close()"></td>
 		</tr>
 	</table>
+</form>
 </div>
 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	var fm2 = opener.document.getElementById("fm2");
 	$(function(){
 		$("#del").click(function(){
-			var pw = "${sessionScope.pw}"; 
-			if($("#chk").val()==pw){
-				$(fm2).submit();
-				window.close();
-			}else{
-				alert("비밀번호가 틀렸습니다");
+			var params = $("#fm1").serialize();
+			$.ajax({
+				type:"post",
+				url:"/member/delmember",
+				data:params,
+				dataType:"json",
+				success:function(data){
+					if(data.result==1){
+						$("#wrap").empty();
+						$("#wrap").append($("<div style='width:100%;text-align:center;margin-top:20px;'>회원 탈퇴가 정상처리 되었습니다</div>"));
+						$(window).unload(function() { 
+							opener.location.href='/board/';
+						});
+						$("#wrap").append($("<input id='closebtn' type='button' value='닫기' style='margin:10px 0 0 115px;'>"));
+					}else{
+						$("#not").remove();
+						$("#wrap").prepend($("<div id='not' style='color:red;width:100%;text-align:center;'>비밀번호가 일치하지 않습니다</div>"));
+						$("#pw").focus();
+						$("#pw").select();
+					}
+				},
+				error:function(request,status,error){
+				    alert("작업 실패");
+				 }
+			});
+		});
+		$("#pw").keyup(function(e){
+			if(e.keyCode=='13'){
+				$("#del").trigger("click");
 			}
+		});
+		$(document).on("click","#closebtn",function(){
+			window.close();
 		});
 	})
 </script>

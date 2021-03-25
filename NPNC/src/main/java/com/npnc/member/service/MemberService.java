@@ -11,5 +11,7 @@ public interface MemberService {
 	public int legMember(MDto dto);
 	public MDto getInfo(String id);
 	public int update(MDto dto);
-	public int delmember(String id);
+	public int delmember(String id,String pw);
+	public int chkId(String id);
+	public int chgpw(String id, String oldpw, String newpw);
 }

@@ -10,12 +10,14 @@ public interface MDao {   //회원 관련 DAO
 	
 	public MDto isMember(@Param("id") String id,@Param("pw") String pw);
 	public String findId(@Param("param") HashMap<String, Object> param);
-	public int findPw(@Param("param") HashMap<String, Object> param);
-	public int changePw(@Param("id") String id,@Param("pw") String pw);
-	public int legMember(@Param("dto") MDto dto);
+	public Integer findPw(@Param("param") HashMap<String, Object> param);
+	public Integer changePw(@Param("id") String id,@Param("pw") String pw);
+	public Integer legMember(@Param("dto") MDto dto);
 	public MDto getInfo(@Param("id") String id);
-	public int update(@Param("dto") MDto dto);
-	public int delmember(@Param("id") String id);
+	public Integer update(@Param("dto") MDto dto);
+	public Integer delmember(@Param("id") String id,@Param("pw") String pw);
+	public Integer chkId(@Param("id") String id);
+	public Integer chgpw(@Param("param") HashMap<String, Object> param);
 	
    /*Connection conn = null;
    PreparedStatement pstmt = null;

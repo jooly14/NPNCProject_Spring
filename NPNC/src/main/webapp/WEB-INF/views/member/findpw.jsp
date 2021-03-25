@@ -55,12 +55,13 @@
             width: 60%;
             display: inline-block;
         }
-        input[type=submit]{
+        #btn1{
         	background-color: limegreen;
         	width: 200px;
         	height: 40px;
         	color:white;
         	border: 1px solid lightgray;
+        	margin-top:10px;
         }
         .goto{
         	width: 100px;
@@ -70,6 +71,21 @@
             color: grey;
             cursor: pointer;
         }
+        table tr td{
+        	text-align:left;
+        }
+        .idnum1{
+        	width:100px;
+        }
+         .phonenum{
+        	width:50px;
+    		text-align:center;
+        }
+        .findpw{
+            padding: 20px;
+            width: 70%;
+            display: inline-block;
+        }
 	</style>
 </head>
 <body>
@@ -78,25 +94,66 @@
         <br><br>
         <div class=content>
             <span>회원정보에 등록한 정보가 입력한 정보를 똑같이 입력해 주세요.</span><br><br>
-			<form action="/member/doFindpw" method="post">
-				<table>
+            <div class="findpw">
+			<form id="fm1" action="/member/doFindpw" method="post">
+				 <table>
 					<tr>
-						<td>아이디</td>
-						<td><input type="text" name="id"></td>
-					</tr>
-					<tr>
-						<td>주민등록번호</td>
-						<td><input type="password" name="idnum"></td>
-					</tr>
-					<tr>
-						<td>휴대전화</td>
-						<td><input type="text" name="phonenum"></td>
-					</tr>
-				</table><br><br>
-				<input type="submit" value="비빌번호 변경">
+                        <td style="width:150px;">아이디</td>
+                        <td><input type="text" name="id" id="id"  maxlength="10"></td>
+                    </tr>
+                    <tr>
+                        <td>휴대전화</td>
+                        <td><input type="hidden" name="phonenum"><input type="text" class="phonenum"  maxlength="3"> - <input type="text" class="phonenum"  maxlength="4"> - <input type="text" class="phonenum"  maxlength="4"></td>
+                    </tr>
+                    <tr>
+                        <td>주민등록번호</td>
+                        <td><input type="hidden" id="idnum1" name="idnum"><input type="text" class="idnum1"  maxlength="6"> - <input type="password" class="idnum1"  maxlength="7"></td>
+                    </tr>
+                </table>
+				<input type="button" id="btn1" value="비밀번호 찾기">
 			</form>
+			</div>
+			</div>
 		</div><br><br>
 		<input class="goto login"type="button" value="로그인" onclick="location.href='/member/login'"> | <input class="goto leg" type="button" value="회원가입" onclick="location.href='/member/leg'">
 	</div>
+	
+	<script  src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+    	$(function(){
+    		$("#btn1").click(function(){
+	    		$("#idnum1").val($("input[class=idnum1]").eq(0).val()+$("input[class=idnum1]").eq(1).val());
+				$("input[name=phonenum]").val($("input[class=phonenum]").eq(0).val()+"-"+$("input[class=phonenum]").eq(1).val()+"-"+$("input[class=phonenum]").eq(2).val());
+				if( $("#id").val() =='' || $("#idnum1").val() =='' ||$("input[name=phonenum]").val() == ''){
+					alert("정보를 모두 입력해주세요");
+				}else if($("#idnum1").val().length!=13){
+					alert("주민등록번호의 형식이 잘못되었습니다");
+				}else{
+					$("#fm1").submit();
+				}
+    		});
+    		
+    		
+    		
+    		$("input[class=idnum1]").on("keyup focusout",function(){
+    			onlyNum($(this));
+    		});
+    		$("input[class=phonenum]").on("keyup focusout",function(){
+    			onlyNum($(this));
+    		});
+    		$("input[name=id]").on("keyup focusout",function(){
+    			noHangle($(this));
+    		});
+    		
+    		function onlyNum(obj){
+    			var inputVal = obj.val();
+    			obj.val(inputVal.replace(/[^0-9]/gi,''));
+    		}
+    		function noHangle(obj){
+    			var inputVal = obj.val();
+    			obj.val(inputVal.replace(/[^a-z0-9_]/gi,''));
+    		}
+    	});
+    </script>
 </body>
 </html>

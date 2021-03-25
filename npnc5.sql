@@ -7,8 +7,8 @@ CREATE TABLE member( -- 회원정보  테이블
 	NAME VARCHAR(100) NOT NULL, 
 	idnum VARCHAR(13) NOT NULL UNIQUE, -- 주민등록번호 
 	email VARCHAR(100),
-	address VARCHAR(100),
-	phonenum VARCHAR(15) NOT NULL,
+	address VARCHAR(200),
+	phonenum VARCHAR(17) NOT NULL,
 	usergrade int not NULL DEFAULT 4
 );
 CREATE TABLE category(
@@ -79,9 +79,9 @@ INSERT into category VALUES(NULL,'[직거래]지방권','충청도지역',DEFAUL
 INSERT into category VALUES(NULL,'[직거래]지방권','제주지역',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]지방권','강원도지역',DEFAULT,DEFAULT);
 
-INSERT into member VALUES('test111','1111','테스트일','1111111111111',NULL,NULL,'01011111111',0);
-INSERT into member VALUES('test222','2222','테스트이','2222222222222',NULL,NULL,'01022222222',1);
-INSERT into member VALUES('test333','3333','테스트삼','3333333333333',NULL,NULL,'01033333333',default);
+INSERT into member VALUES('test111','1111','테스트일','1111111111111',NULL,NULL,'010-1111-1111',0);
+INSERT into member VALUES('test222','2222','테스트이','2222222222222',NULL,NULL,'010-2222-2222',1);
+INSERT into member VALUES('test333','3333','테스트삼','3333333333333',NULL,NULL,'010-3333-3333',default);
 
 -- member테이블에 grade컬럼, category테이블에 readgrade,writegrade와 join해서 사용 
 CREATE TABLE grade(

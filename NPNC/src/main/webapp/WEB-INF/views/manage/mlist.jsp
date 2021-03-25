@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="manage_access_chk.jsp" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -64,7 +65,10 @@
 					<td style="text-align:center;width:100px;">${d.name}</td><%-- <a href="manage?cmd=bread&idx=${d.idx}"></a> --%>
 					<td style="width:180px;">${d.email}</td>
 					<td style="text-align:center;width:120px;">${d.phonenum}</td>
-					<td>${d.address}</td>
+					<td>${fn:split(d.address, "*")[0]}<br>
+						${fn:split(d.address, "*")[1]}<br>
+						${fn:split(d.address, "*")[2]} ${fn:split(d.address, "*")[3]}
+					</td>
 				</tr>
 			</c:forEach>
 			</table>

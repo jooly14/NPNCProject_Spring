@@ -16,10 +16,10 @@
   			and ${param.phonenum} = ${param.phonenum}
   		</if>
   </select>
-  <select id="findPw" resultType="int" parameterType="HashMap">
+  <select id="findPw" resultType="Integer" parameterType="HashMap">
   	select count(*) from member where id = #{param.id} and idnum = #{param.idnum} and phonenum = #{param.phonenum}
   </select>
-  <select id="changePw" resultType="int" >
+  <select id="changePw">
   	update member set pw= #{pw} where id= #{id}
   </select>
   <insert id="legMember" parameterType="com.npnc.member.dto.MDto">
@@ -29,9 +29,15 @@
   	select * from member where id = #{id}
   </select>
   <update id="update"  parameterType="com.npnc.member.dto.MDto">
-  	update member set pw=#{dto.pw} , email=#{dto.email} , address=#{dto.address}, phonenum=#{dto.phonenum} where id=#{dto.id}
+  	update member set email=#{dto.email} , address=#{dto.address}, phonenum=#{dto.phonenum} where id=#{dto.id}
   </update>
   <delete id="delmember">
-  	delete from member where id= #{id}
+  	delete from member where id= #{id} and pw = #{pw}
   </delete>
+  <select id="chkId" resultType="Integer">
+  	select count(*) from member where id = #{id}
+  </select>
+  <update id="chgpw" parameterType="HashMap">
+  	update member set pw = #{param.newpw} where pw = #{param.oldpw} and id = #{param.id} 
+  </update>
 </mapper>

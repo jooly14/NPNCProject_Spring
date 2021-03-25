@@ -36,8 +36,8 @@ public class MemberServiceImpl implements MemberService {
 		return result;
 	}
 	public int changePw(String id, String pw) {
-		int result = dao.changePw(id, pw);
-		return result;
+		dao.changePw(id, pw);
+		return 0;
 	}
 	public int legMember(MDto dto) {
 		int result = dao.legMember(dto);
@@ -51,8 +51,21 @@ public class MemberServiceImpl implements MemberService {
 		int result = dao.update(dto);
 		return result;
 	} 
-	public int delmember(String id) {
-		int result = dao.delmember(id);
+	public int delmember(String id,String pw) {
+		int result = dao.delmember(id,pw);
+		return result;
+	}
+	@Override
+	public int chkId(String id) {
+		return dao.chkId(id);
+	}
+	@Override
+	public int chgpw(String id, String oldpw, String newpw) {
+		HashMap<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("oldpw", oldpw);
+		param.put("newpw", newpw);
+		int result = dao.chgpw(param);
 		return result;
 	}
 }
