@@ -61,14 +61,14 @@ CREATE TABLE rgob( -- 댓글 좋아요 or 싫어요 테이블
 
 
 
-INSERT into category VALUES(NULL,'[직거래]수도권','강남.서초.강동.송파',0,0);
+INSERT into category VALUES(NULL,'[직거래]수도권','강남.서초.강동.송파',1,1);
 INSERT into category VALUES(NULL,'[직거래]수도권','금천.구로.강서.양천',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]수도권','마포.은평.서대문구',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]수도권','중구.종로.동대문구',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]수도권','성북.성동.광진.용산',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]수도권','중랑.강북.노원.도봉',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]수도권','동작.관악.영등포구',DEFAULT,DEFAULT);
-INSERT into category VALUES(NULL,'[직거래]지방권','부산광역시',1,1);
+INSERT into category VALUES(NULL,'[직거래]지방권','부산광역시',2,2);
 INSERT into category VALUES(NULL,'[직거래]지방권','대구광역시',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]지방권','울산광역시',DEFAULT,DEFAULT);
 INSERT into category VALUES(NULL,'[직거래]지방권','대전광역시',DEFAULT,DEFAULT);
@@ -80,7 +80,7 @@ INSERT into category VALUES(NULL,'[직거래]지방권','제주지역',DEFAULT,D
 INSERT into category VALUES(NULL,'[직거래]지방권','강원도지역',DEFAULT,DEFAULT);
 
 INSERT into member VALUES('test111','1111','테스트일','1111111111111',NULL,NULL,'010-1111-1111',0);
-INSERT into member VALUES('test222','2222','테스트이','2222222222222',NULL,NULL,'010-2222-2222',1);
+INSERT into member VALUES('test222','2222','테스트이','2222222222222',NULL,NULL,'010-2222-2222',2);
 INSERT into member VALUES('test333','3333','테스트삼','3333333333333',NULL,NULL,'010-3333-3333',default);
 
 -- member테이블에 grade컬럼, category테이블에 readgrade,writegrade와 join해서 사용 
