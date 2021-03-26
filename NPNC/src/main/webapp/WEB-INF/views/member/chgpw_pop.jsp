@@ -74,6 +74,10 @@
 				alert("새 비밀번호를 입력해주세요");	
 				$("#newpw").focus();
 				$("#newpw").select();
+			}else if($("#pw2").val()==""){
+				alert("새 비밀번호 확인을 입력해주세요");	
+				$("#pw2").focus();
+				$("#pw2").select();
 			}else if($("#pwchk").css("display")!="none"){
 				alert("새 비밀번호 확인의 값이 일치하지 않습니다");
 				$("#pw2").focus();
@@ -124,6 +128,9 @@
 			}else{
 				$("#pwchk").css("display","none");
 			}
+		});
+		$("input[name=newpw]").on("focusin",function(){
+			$("input[id=pw2]").val("");
 		});
 	})
 </script>

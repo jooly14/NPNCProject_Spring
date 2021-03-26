@@ -58,7 +58,7 @@
 <body>
 	<div class="wrap">
 	<form action="/member/doLogin" method="post">
-        <div class="logo"><a href="/board/">CAFE NAME</a></div>
+        <div class="logo"><a href="/">CAFE NAME</a></div>
         <input type="text" placeholder="아이디" name="id"><br>
         <input type="password" placeholder="패스워드" name="pw"><br>
         <input type="submit"  value="로그인"><br>

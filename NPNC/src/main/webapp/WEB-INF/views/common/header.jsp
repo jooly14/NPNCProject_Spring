@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <header>
 	<div id="hwrap">
-	<a class="home-link" href="/board/">CAFE NAME</a>
+	<a class="home-link" href="/">CAFE NAME</a>
 	<%
 		if(session.getAttribute("id")==null){
 	%>

@@ -60,7 +60,7 @@
 </head>
 <body>
     <div class="wrap">
-        <span class="naver"><a href="/board/">CAFE NAME</a></span><br><br>
+        <span class="naver"><a href="/">CAFE NAME</a></span><br><br>
         <div class="content">
         	<div style="font-size:12px; margin-left:2px; color:red;">필수항목*</div>
             <form id="fm1" action="/member/doLeg" method="post">
@@ -167,7 +167,7 @@
             	</tr>
             </table>
             		<input id="regbtn" type="button" value="가입">
-            		<input type="button" value="취소" onclick="location.href='/board/'">
+            		<input type="button" value="취소" onclick="location.href='/'">
             </form>
         </div>
     </div>
@@ -219,6 +219,9 @@
     			}else{
     				$("#pwchk").css("display","none");
     			}
+    		});
+    		$("input[name=pw]").on("focusin",function(){
+    			$("input[id=pw2]").val("");
     		});
     		function noHangle(obj){
     			var inputVal = obj.val();

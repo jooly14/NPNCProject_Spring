@@ -23,7 +23,7 @@
   	update member set pw= #{pw} where id= #{id}
   </select>
   <insert id="legMember" parameterType="com.npnc.member.dto.MDto">
-  	INSERT INTO MEMBER VALUES(#{dto.id},#{dto.pw},#{dto.name},#{dto.idnum},#{dto.email},#{dto.address},#{dto.phonenum},default)
+  	INSERT INTO member VALUES(#{dto.id},#{dto.pw},#{dto.name},#{dto.idnum},#{dto.email},#{dto.address},#{dto.phonenum},default)
   	</insert>
   <select id="getInfo"  resultType="com.npnc.member.dto.MDto">
   	select * from member where id = #{id}

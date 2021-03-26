@@ -71,7 +71,7 @@
 						$("#wrap").empty();
 						$("#wrap").append($("<div style='width:100%;text-align:center;margin-top:20px;'>회원 탈퇴가 정상처리 되었습니다</div>"));
 						$(window).unload(function() { 
-							opener.location.href='/board/';
+							opener.location.href='/';
 						});
 						$("#wrap").append($("<input id='closebtn' type='button' value='닫기' style='margin:10px 0 0 115px;'>"));
 					}else{

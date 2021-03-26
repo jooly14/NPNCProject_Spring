@@ -106,7 +106,7 @@
 			<c:forEach var="d" items="${dtos}">
 				<tr>
 					<td style="text-align:center;width:80px;">${d.idx}</td>
-					<td>${d.title} [${d.replyCnt}]</td><%-- <a href="manage?cmd=bread&idx=${d.idx}"></a> --%>
+					<td><a href="/board/read?idx=${d.idx}">${d.title} [${d.replyCnt}]</a></td>
 					<td style="text-align:center;width:80px;">${d.id}</td>
 					<td style="text-align:center;width:80px;"><fmt:formatDate value="${d.regdate}" pattern="yyyy.MM.dd"/>   </td>
 					<td style="text-align:center;width:50px;">${d.hit}</td>

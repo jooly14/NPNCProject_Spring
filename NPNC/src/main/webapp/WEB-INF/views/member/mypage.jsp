@@ -68,7 +68,7 @@
 </head>
 <body>
     <div class="wrap">
-         <span class="naver"><a href="/board/">CAFE NAME</a></span><br><br>
+         <span class="naver"><a href="/">CAFE NAME</a></span><br><br>
         <div class="content">
             <form id="fm1" action="/member/update" method="post">
             <table>
