@@ -1,14 +1,14 @@
 package com.npnc.member.dto;
 
 public class MDto {
-	private String id;
-	private String pw;
-	private String name;
-	private String idnum;
-	private String email;
-	private String address;
-	private String phonenum;
-	private int usergrade;
+	private String id;				//아이디
+	private String pw;				//비밀번호
+	private String name;			//이름
+	private String idnum;			//주민등록번호
+	private String email;			//이메일
+	private String address;			//주소
+	private String phonenum;		//전화번호
+	private int usergrade;			//회원등급
 	
 	public String getId() {
 		return id;

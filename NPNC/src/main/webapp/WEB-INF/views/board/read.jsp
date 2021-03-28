@@ -11,129 +11,126 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link
-   rel="stylesheet"
-   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
- />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <link rel="stylesheet" href="/resources/css/board/blist.css"/>
 <link rel="stylesheet" href="/resources/css/board/bread.css"/>
 <link rel="stylesheet" href="/resources/css/common/nav_category.css"/>
 <link rel="stylesheet" href="/resources/css/common/header.css"/>
-
 </head>
 <body>
-
 <div id="wrap">
 <%@ include file="../common/header.jsp" %>
 	<section id="section1">
-	<%@ include file="../common/nav_category.jsp" %>
-    <div id="content">
-	<article id="read" style="
-							border : 1px solid lightgray;
-							border-radius: 5px;
-							padding : 30px;
-	">
-        <article id="read-head">
-           
-            <div class="dto-header">
-                <a href="/board/list?category=${category}" class="board-title" style="color: #03c75a"></a>
-            </div>
-            <div class="dto-header">
-                <span class="content-title" style="font-size: 20px;">${dto.title}</span>
-            </div>
-            <div class="dto-header">
-                <span class="id" style="font-weight: bold; padding-left:2px">${dto.id}</span>
-            </div>
-            <div class="dto-header">
-                <span style="color:lightgray;">${dto.regdate}</span>&nbsp;|&nbsp;조회수&nbsp;&nbsp;${dto.hit}&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 1?'font-weight:bold':''}">좋아요&nbsp;&nbsp;<span style="color:red">${dto.good}</span></a>&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 0?'font-weight:bold':''}">싫어요&nbsp;&nbsp;<span style="color:blue">${dto.bad}</span></a></span>
-            </div>
-                <c:if test="${!empty dto.file}">
-            <div class="dto-header">
-	                <span>첨부파일&nbsp;&nbsp;|&nbsp;&nbsp;<a href="${uploadpath}/${dto.savedfile}" download="${dto.file}">${dto.file}</a></span>
-			</div>
-                </c:if>
-            
-            <div class="content">
-                <textarea style="resize: none;" readonly >${dto.content}</textarea>
-            </div>
-        </article>
-        
-        
-        
-        
-        
-        
-        <%--댓글 가져오기 로직 --%>
-        <%
-        	 
-        %>
-        
-        
-        
-        <!-- 댓글 가져오기 구현부 -->
-        <article id="read-reply">
-            <div style="border-bottom : 1px solid lightgray;
-            			margin-top : 10px;
-            			margin-bottom : 5px;
-            			padding-bottom : 5px;
-            			">
-            	댓글&nbsp;<span id="reply-cnt" style="font-weight: bold;">${fn:length(rdto)}</span>
-            </div>
-            
-            
-            <div id="reply-list">
-            <c:forEach var="reply1" items="${rdto}" varStatus="status">
-				<%--
-				 댓글끼리 구분선 구현
-				반복문 마지막때 구분선 사라지는 로직.
-				--%>
-	           			<div style="border-bottom: 1px solid lightgray;">
-		            		<span style="font-weight:bold;">${reply1.id}</span><br>
-			            	<span>${reply1.content}</span><br>
-			            	<span style="color:lightgray;"><fmt:formatDate value="${reply1.regDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  </span>
-			            	
-			            		<c:if test="${sessionScope.id eq reply1.id }">
-			            			<button class="reply-update">수정</button>
-			            			<button class="reply-del ${reply1.ridx}">삭제</button>
-			            		</c:if>
-			            		<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
-			            			<button class="reply-del ${reply1.ridx}">삭제</button>
-			            		</c:if>
-		            	</div>
-            </c:forEach>
-            
-            </div>
-            
-            
-            <!-- 댓글입력 구현부 -->
-            <c:if test="${!empty sessionScope.id}">
-            <form id="insert-reply-form" action="/board/" style="border : 1px solid lightGray;
-            			 border-radius: 3px;
-            			 padding : 10px;
-            			 margin-top : 5px;
-            			">
-            	<label style="font-weight : bold;">${sessionScope.id}</label><br>
-            	<input type="text" name="reply" id="input-reply" placeholder="댓글을 남겨보세요">
-            	<input type="hidden" name="bidx" value="${dto.idx}">
-            	<input type="button" value="등록" id="btn-reply" style="background-color : #7affcf; margin : 0px;">
-            </form>
-            </c:if>
-        </article>
-        
-        
-        <!-- 수정 삭제, 게시글의 작성자 아이디와, 로그인세션 ID값 검사하여 보여줌. -->
-        <div id="btns">
-       	<c:if test="${sessionScope.id eq dto.id}">
-	        <button id="btn-edit" onclick="location.href='/board/update?idx=${dto.idx}'">수정</button>
-	        <button id="btn-del">삭제</button>
-   		</c:if>
-    	<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
-         	<button id="btn-del">삭제</button>
-    	</c:if>
-    	<button id="btn-list"  onclick="location.href='/board/list?category=${category}'">목록</button>
-    	</div>
-    </article>
-    </div>
+		<%@ include file="../common/nav_category.jsp" %>
+    	<div id="content">
+			<article id="read" style="
+									border : 1px solid lightgray;
+									border-radius: 5px;
+									padding : 30px;
+			">
+		        <article id="read-head">
+		           
+		            <div class="dto-header">
+		                <a href="/board/list?category=${category}" class="board-title" style="color: #03c75a"></a>
+		            </div>
+		            <div class="dto-header">
+		                <span class="content-title" style="font-size: 20px;">${dto.title}</span>
+		            </div>
+		            <div class="dto-header">
+		                <span class="id" style="font-weight: bold; padding-left:2px">${dto.id}</span>
+		            </div>
+		            <div class="dto-header">
+		                <span style="color:lightgray;">${dto.regdate}</span>&nbsp;|&nbsp;조회수&nbsp;&nbsp;${dto.hit}&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 1?'font-weight:bold':''}">좋아요&nbsp;&nbsp;<span style="color:red">${dto.good}</span></a>&nbsp;|&nbsp;<a class="gob" href="#" style="${goodbad == 0?'font-weight:bold':''}">싫어요&nbsp;&nbsp;<span style="color:blue">${dto.bad}</span></a></span>
+		            </div>
+		                <c:if test="${!empty dto.file}">
+		            <div class="dto-header">
+			                <span>첨부파일&nbsp;&nbsp;|&nbsp;&nbsp;<a href="${uploadpath}/${dto.savedfile}" download="${dto.file}">${dto.file}</a></span>
+					</div>
+		                </c:if>
+		            
+		            <div class="content">
+		                <textarea style="resize: none;" readonly >${dto.content}</textarea>
+		            </div>
+		        </article>
+		        
+		        
+		        
+		        
+		        
+		        
+		        <%--댓글 가져오기 로직 --%>
+		        <%
+		        	 
+		        %>
+		        
+		        
+		        
+		        <!-- 댓글 가져오기 구현부 -->
+		        <article id="read-reply">
+		            <div style="border-bottom : 1px solid lightgray;
+		            			margin-top : 10px;
+		            			margin-bottom : 5px;
+		            			padding-bottom : 5px;
+		            			">
+		            	댓글&nbsp;<span id="reply-cnt" style="font-weight: bold;">${fn:length(rdto)}</span>
+		            </div>
+		            
+		            
+		            <div id="reply-list">
+		            <c:forEach var="reply1" items="${rdto}" varStatus="status">
+						<%--
+						 댓글끼리 구분선 구현
+						반복문 마지막때 구분선 사라지는 로직.
+						--%>
+			           			<div style="border-bottom: 1px solid lightgray;">
+				            		<span style="font-weight:bold;">${reply1.id}</span><br>
+					            	<span>${reply1.content}</span><br>
+					            	<span style="color:lightgray;"><fmt:formatDate value="${reply1.regDate}" pattern="yyyy-MM-dd HH:mm:ss"/>  </span>
+					            		<!-- 작성자만 삭제 수정 가능 -->
+					            		<c:if test="${sessionScope.id eq reply1.id }">
+					            			<button class="reply-update">수정</button>
+					            			<button class="reply-del ${reply1.ridx}">삭제</button>
+					            		</c:if>
+					            		<!-- 관리자는 삭제만 가능 -->
+					            		<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
+					            			<button class="reply-del ${reply1.ridx}">삭제</button>
+					            		</c:if>
+				            	</div>
+		            </c:forEach>
+		            
+		            </div>
+		            
+		            
+		            <!-- 댓글입력 구현부 -->
+		            <c:if test="${!empty sessionScope.id}">
+		            <form id="insert-reply-form" action="/board/" style="border : 1px solid lightGray;
+		            			 border-radius: 3px;
+		            			 padding : 10px;
+		            			 margin-top : 5px;
+		            			">
+		            	<label style="font-weight : bold;">${sessionScope.id}</label><br>
+		            	<input type="text" name="reply" id="input-reply" placeholder="댓글을 남겨보세요">
+		            	<input type="hidden" name="bidx" value="${dto.idx}">
+		            	<input type="button" value="등록" id="btn-reply" style="background-color : #7affcf; margin : 0px;">
+		            </form>
+		            </c:if>
+		        </article>
+		        
+		        
+		        <!-- 수정 삭제, 게시글의 작성자 아이디와, 로그인세션 ID값 검사하여 보여줌. -->
+		        <div id="btns">
+		       	<c:if test="${sessionScope.id eq dto.id}">
+			        <button id="btn-edit" onclick="location.href='/board/update?idx=${dto.idx}'">수정</button>
+			        <button id="btn-del">삭제</button>
+		   		</c:if>
+		   		<!-- 관리자는 삭제만 가능 -->
+		    	<c:if test="${(sessionScope.id ne reply1.id) && (sessionScope.grade eq 0)}">
+		         	<button id="btn-del">삭제</button>
+		    	</c:if>
+		    	<button id="btn-list"  onclick="location.href='/board/list?category=${category}'">목록</button>
+		    	</div>
+		    </article>
+	    </div>
     </section>
    	<%@ include file="ajax_blist.jsp" %>
 	<%@ include file="../common/footer.jsp" %>
@@ -167,6 +164,7 @@
 			}
 		 });
 		 
+		 //댓글 수정 버튼 클릭시 수정 폼 생성
 		 var reply_update_btn;
 		 $(document).on("click",".reply-update",function(){
 			 if($(this).prev().text()=="new  "){
@@ -182,15 +180,8 @@
 			 }
 			 reply_update_btn = $(this).detach();
 		 });
-		 
+		 //댓글 수정 취소 버튼 선택시 새로 댓글 리스트를 가져옴
 		 $(document).on("click",".reply_update_cancel",function(){
-			/* 	 var text = $(this).prev().prev().val();
-			 if($(this).parent().next().next().next().text()=="new  "){
-				 $(this).parent().next().next().next().after(reply_update_btn.clone());
-			 }else{
-				 $(this).parent().next().next().after(reply_update_btn.clone());
-			 }
-				 $(this).parent().html(text); */
 			 var params = "bidx=${dto.idx}";
 				$.ajax({
 					type:"post",
@@ -207,6 +198,7 @@
 
 				});
 		 });
+		 //댓글 수정완료 버튼 클릭시
 		 $(document).on("click",".reply_update_ok",function(){
 			 var ridx = 0;
 			 if($(this).parent().next().next().next().text()=="new  "){
@@ -232,9 +224,11 @@
 				});
 		 });
 		 
-		 
+		 //댓글 삭제
 		 $(document).on("click",".reply-del",deleteReply);
+		 //댓글 입력
 		 $(document).on("click","#btn-reply",insertReply);
+		 
 		 function insertReply() {
 			var params = $("#insert-reply-form").serialize() ;
 			$.ajax({
@@ -271,7 +265,7 @@
 				});
 			 }
 		}
-		
+		//댓글 수정 및 입력 삭제 후 댓글 리스트 업데이트
 		function updateNewReply(newR){
 			var replylist = $("#reply-list");
 			replylist.empty();
@@ -307,6 +301,8 @@
 			$("#reply-cnt").text(newR.length);
 		} 
 		
+		//좋아요 싫어요 버튼 클릭시
+		//기존에 선택 여부를 비교하여 처리
 		$(document).on("click",".gob", function(e){
 			e.preventDefault();
 			if("${sessionScope.id}" != ""){

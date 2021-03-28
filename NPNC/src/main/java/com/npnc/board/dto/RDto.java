@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 
 public class RDto {
 	
-	private int ridx;
-	private int bidx;
-	private String id;
-	private String content;
-	private Timestamp regDate;
+	private int ridx;					//댓글 idx
+	private int bidx;					//게시글 idx
+	private String id;					//회원 아이디
+	private String content;				//댓글 내용
+	private Timestamp regDate;			//등록일
 	
 	
 	

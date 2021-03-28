@@ -1,8 +1,8 @@
 package com.npnc.board.dto;
 
 public class GDto {
-	private int grade;
-	private String name;
+	private int grade;			//회원등급 번호
+	private String name;		//등급 이름
 	public GDto() {
 	}
 	public GDto(int grade, String name) {

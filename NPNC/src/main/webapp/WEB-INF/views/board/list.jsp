@@ -9,14 +9,12 @@
 <head>
 <c:if test="${delete}">
 	<script>
+		//게시글 삭제 이후 알림
 		alert("게시글이 삭제되었습니다");
 	</script>
 </c:if>
 <title>Insert title here</title>
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-  />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <link rel="stylesheet" href="/resources/css/board/blist.css"/>
 <link rel="stylesheet" href="/resources/css/common/nav_category.css"/>
 <link rel="stylesheet" href="/resources/css/common/header.css"/>
@@ -25,7 +23,7 @@
 <div id="wrap">
 	<%@ include file="../common/header.jsp" %>
 	<section id="section1">
-	<%@ include file="../common/nav_category.jsp" %>
+		<%@ include file="../common/nav_category.jsp" %>
 		<div id="content">
 			<h2 id="category-name"></h2>
 			<div class="list-style">
@@ -61,6 +59,7 @@
 				</tr>
 			</c:forEach>
 			</table>
+			<!-- 로그인한 경우에만 글쓰기 가능 & 카테고리의 읽기권한과 회원등급 비교 -->
 			<c:if test="${sessionScope.id!=null&&!empty category}">
 				<%
 				for(int i=0;i<categoryList.size();i++){
@@ -117,6 +116,7 @@
 			var str ="/board/list?type="+type+"&keyword="+keyword+"&category="+category+"&psize="+$("#psize").val();
 			location.href=str;
 		});
+		/* 게시글 선택시 읽기 권한 비교  */
 		$(".content-read").click(function(e){
 			e.preventDefault();
 			//board?cmd=bread&idx=
@@ -130,7 +130,6 @@
 					tmpcategory = "<%=categoryList.get(i).getIdx() %>";
 					if(tmpcategory == readcategory){
 						readgrade = "<%=categoryList.get(i).getReadgrade() %>";
-						console.log(readgrade);
 					}
 					<%
 				}

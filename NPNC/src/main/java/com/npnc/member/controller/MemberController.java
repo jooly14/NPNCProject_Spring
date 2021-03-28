@@ -50,7 +50,7 @@ public class MemberController{
 	public String doLogin(String id, String pw,HttpSession session,Model model) {
 		MDto result  = service.login(id, pw);
 		if(result != null) {
-			if(result.getUsergrade()==100) {
+			if(result.getUsergrade()==100) {	// 계정 정지인 경우
 				model.addAttribute("grade", result.getUsergrade());
 				return "member/login";
 			}
@@ -58,22 +58,25 @@ public class MemberController{
 			session.setAttribute("pw", result.getPw());
 			session.setAttribute("grade", result.getUsergrade());
 			return "redirect:/";
-		}else {
+		}else {									//로그인 아이디 또는 비밀번호가 틀린 경우
 			model.addAttribute("denied",true);
 			return "member/login";
 		}
 	}
+	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
 	}
+	// 이름, 주민등록번호와 email또는 전화번호로 아이디를 찾음
 	@RequestMapping("/doFindid")
 	public String doFindid(String name,@RequestParam(value="phonenum",required=false) String phonenum,@RequestParam(value="phonenum",required=false) String email,String idnum,Model model) {
 	      String result = service.findId(name,phonenum,email,idnum);
 	      model.addAttribute("id",result);
 	      return "member/tryfind";
 	}
+	// 아이디, 주민등록번호, 전화번호로 비밀번호를 찾음
 	@RequestMapping("/doFindpw")
 	public String doFindpw(String id,String phonenum,String idnum,Model model) {
 		int result = service.findPw(id,phonenum,idnum);
@@ -85,17 +88,20 @@ public class MemberController{
 			return "member/findpw";
 		}
 	}
+	//비밀번호를 찾은 후 비밀번호 변경
 	@RequestMapping("/doChangepw")
 	public String doChangepw(String id,String pw) {
 		service.changePw(id, pw);
 		return "redirect:/member/login";
 	}
+	//회원가입
 	@RequestMapping("/doLeg")
 	public String doLeg(MDto dto,Model model) {
 		int result=service.legMember(dto);
 		model.addAttribute("result", result);
 		return "member/tryleg"; // 회원가입 성공인지 실패인지 보여주는 페이지
 	}
+	//마이페이지
 	@RequestMapping("/mypage")
 	public void mypage(HttpSession session,Model model) {
 		MDto result = service.getInfo((String)session.getAttribute("id"));
@@ -108,7 +114,7 @@ public class MemberController{
 		rAttr.addFlashAttribute("result", true);
 		return "redirect:/member/mypage";
 	}
-
+	//회원탈퇴
 	@RequestMapping("/delmember")
 	@ResponseBody
 	public Map<String, Object> delmember(HttpSession session,String pw) {
@@ -120,6 +126,7 @@ public class MemberController{
 		map.put("result", result);
 		return map;
 	}
+	//회원가입 시 아이디 중복여부 체크
 	@RequestMapping("/chkId")
 	@ResponseBody
 	public Map<String, Object> chkId(String id) {
@@ -128,7 +135,7 @@ public class MemberController{
 		map.put("result", result);
 		return map;
 	}
-	
+	//마이페이지에서 비밀번호 변경
 	@RequestMapping("/chgpw")
 	@ResponseBody
 	public Map<String, Object> chgpw(String oldpw,String newpw,HttpSession session) {
@@ -139,45 +146,5 @@ public class MemberController{
 	}
 	
 	
-	/*
-	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String viewpage="";							//이동할 jsp 페이지
-		String cmd = request.getParameter("cmd");	//사용자 요청 기능
-		CommandHandler handler = null;
-		if(cmd.equals("leg")){
-			handler = new MLegHandler();	//cmd파라미터에 맞는 handler생성
-		}else if(cmd.equals("login")){
-			handler = new MLoginHandler();	
-		}else if(cmd.equals("logout")){
-			handler = new MLogoutHandler();
-			handler.process(request, response);
-			response.sendRedirect("board");
-			return;
-		}else if(cmd.equals("update")){
-			handler = new MInfoUpdateHandler();
-			viewpage = handler.process(request, response);
-			response.sendRedirect(viewpage);
-			return;
-		}else if(cmd.equals("delmember")){
-			handler = new MDelmemberHandler();	
-			viewpage = handler.process(request, response);
-			response.sendRedirect(viewpage);
-			return;
-		}else if(cmd.equals("findid")){
-			handler = new MFindIdHandeler();	
-		}else if(cmd.equals("findpw")){
-			handler = new MFindPwHandler();	
-		}else if(cmd.equals("changepw")){
-			handler = new MChangePwHandler();	
-		}else {
-			
-		}
-		viewpage = handler.process(request,response);	//dao 호출 및 필요 기능 실행하고 jsp페이지 받아오기
-		CommandHandler clistHandler = new CListHandler();	//모든 페이지에 카테고리를 불러와야되기 때문에
-		clistHandler.process(request, response);
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewpage);
-		dispatcher.forward(request, response);
-	}*/
 
 }

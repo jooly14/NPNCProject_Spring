@@ -59,6 +59,8 @@
 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	$(function(){
+		
+		/* 회원 탈퇴 버튼 클릭 */
 		$("#del").click(function(){
 			var params = $("#fm1").serialize();
 			$.ajax({
@@ -86,11 +88,13 @@
 				 }
 			});
 		});
+		/* 엔터 키 이벤트 */
 		$("#pw").keyup(function(e){
 			if(e.keyCode=='13'){
 				$("#del").trigger("click");
 			}
 		});
+		/* 닫기 버튼 */
 		$(document).on("click","#closebtn",function(){
 			window.close();
 		});

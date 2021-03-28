@@ -91,6 +91,7 @@
             		<td><input type="hidden" name="email"><input class="email" type="text" maxlength="20">@<input class="email" type="text" maxlength="50"></td>
             	</tr>
             	<tr>
+            	<!-- 다음 주소 api -->
             		<td><div style="padding-bottom:80px;">주소</div></td>
             		<td><input type="hidden" name="address">
             		<input type="hidden" id="sample4_postcode" placeholder="우편번호">
@@ -174,6 +175,7 @@
     <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script>
     	$(function(){
+    		/* 아이디 중복여부 확인 */
     		$("input[name=id]").keyup(function(){
     			noHangle($(this));
     			var params = "id="+$(this).val();
@@ -195,6 +197,8 @@
 				});
     			
     		});
+    		
+    		/* 입력 문자 제한 */
     		$("input[name=id]").focusout(function(){
     			noHangle($(this));
     		});
@@ -239,7 +243,7 @@
     			var inputVal = obj.val();
     			obj.val(inputVal.replace(/[0-9]/gi,''));
     		}
-    		
+    		/* 회원가입 버튼 클릭시 */
     		$("#regbtn").click(function(){
     			 $("input[name=idnum]").val($("input[class=idnum]").eq(0).val()+$("input[class=idnum]").eq(1).val());
     			 $("input[name=email]").val($("input[class=email]").eq(0).val()+"@"+$("input[class=email]").eq(1).val());

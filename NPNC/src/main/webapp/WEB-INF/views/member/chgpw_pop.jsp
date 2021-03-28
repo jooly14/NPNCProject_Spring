@@ -65,6 +65,7 @@
 <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 	$(function(){
+		/* 비밀번호 변경 버튼 클릭시 */
 		$("#chg").click(function(){
 			if($("#oldpw").val()==""){
 				alert("현재 비밀번호를 입력해주세요");	
@@ -113,15 +114,17 @@
 				
 			}
 		});
+		/* 엔터키 이벤트 */
 		$(document).keyup(function(e){
 			if(e.keyCode=='13'){
 				$("#chg").trigger("click");
 			}
 		});
+		/* 닫기 버튼 */
 		$(document).on("click","#closebtn",function(){
 			window.close();
 		});
-		
+		/* 비밀번호 확인 칸에서 입력시 비밀번호 일치 여부 확인 */
 		$("input[id=pw2]").keyup(function(){
 			if($("input[name=newpw]").val()!=$(this).val()){
 				$("#pwchk").css("display","inline-block");
@@ -129,6 +132,7 @@
 				$("#pwchk").css("display","none");
 			}
 		});
+		/* 새 비밀번호 칸에 포커스가 생기면 비밀번호 확인 칸 내용을 지움 */
 		$("input[name=newpw]").on("focusin",function(){
 			$("input[id=pw2]").val("");
 		});

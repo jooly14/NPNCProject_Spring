@@ -41,19 +41,22 @@ public class BoardController {
 	private ServletContext context;
 	private String uploadpath = "/resources/upload"; 
 	
+	
+	//do가 붙으면 데이터 처리를 하고 안 붙으면 화면을 보여줌
 	@RequestMapping({"/","list"})
 	public String list(String type,String keyword,Integer category,
 			@RequestParam(value="page",required=false,defaultValue="1")int page,
 			@RequestParam(value="psize",required=false,defaultValue="20")int pagesize, Model model,HttpServletRequest request) {
-		Map<String, Object> rAttr = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);  
-		Map<String, Object> data = service.getList(type, keyword, (rAttr!=null?(Integer)rAttr.get("category"):category), page, pagesize);
+		Map<String, Object> rAttr = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);  									//doWrite 이후 리다이렉트로 카테고리 받아옴
+		Map<String, Object> data = service.getList(type, keyword, (rAttr!=null?(Integer)rAttr.get("category"):category), page, pagesize);	//게시글 리스트 받아오기
 		model.addAllAttributes(data);
-		data = service.getGradeList();
+		data = service.getGradeList();																										//회원등급 리스트 받아오기
 		model.addAllAttributes(data);
-		data = service.getCategoryList();
+		data = service.getCategoryList();																									//카테고리 리스트 받아오기
 		model.addAllAttributes(data);
 		return "board/list";
 	}
+	
 	@RequestMapping("/write")
 	public void write(String category,Model model) {
 		model.addAttribute("category",category);
@@ -62,6 +65,7 @@ public class BoardController {
 		data = service.getCategoryList();
 		model.addAllAttributes(data);
 	}
+	
 	@RequestMapping("/read")
 	public String read(int idx,Model model,@CookieValue(value="hit", required=false) Cookie hit,HttpServletResponse response,HttpSession session) {
 		//조회수를 쿠키로 처리	//다음날에 쿠키가 사라지도록
@@ -88,19 +92,20 @@ public class BoardController {
 		hitC.setMaxAge(diff/1000);
 		response.addCookie(hitC);
 		
-		Map<String, Object> data = service.read(idx);
+		Map<String, Object> data = service.read(idx);						// 게시글 dto,좋아요 및 싫어요 개수, 카테고리, 댓글 리스트 및 댓글 개수 가져옴
 		model.addAllAttributes(data);
 		data = service.getGradeList();
 		model.addAllAttributes(data);
 		data = service.getCategoryList();
 		model.addAllAttributes(data);
 		if(session.getAttribute("id")!=null) {
-			data = service.doGob(idx,(String)session.getAttribute("id"));
+			data = service.doGob(idx,(String)session.getAttribute("id"));	//해당 아이디가 좋아요 및 싫어요를 했는지 알아냄
 			model.addAllAttributes(data);
 		}
-		model.addAttribute("uploadpath", uploadpath);
+		model.addAttribute("uploadpath", uploadpath);						//파일 다운로드가 가능하도록 파일 경로를 보냄
 		return "board/read";
 	}
+	
 	@RequestMapping("/update")
 	public String update(int idx,Model model) {
 		Map<String, Object> data = service.read(idx);
@@ -120,6 +125,7 @@ public class BoardController {
 		if(!path.exists()) {
 			path.mkdirs();
 		}
+		// 기존에 저장된 파일이 있으면 무조건 삭제 후 새로 저장
 		if(savedfile!=null && !savedfile.isEmpty()) {
 			File savedfile_ = new File(path,savedfile);
 			savedfile_.delete();
@@ -240,6 +246,8 @@ public class BoardController {
 		map.put("dogob", "delete");
 		return map;
 	}
+	
+	//게시글 읽기 페이지 하단에 게시글 리스트를 ajax로 제공
 	@RequestMapping("/rblist")
 	@ResponseBody
 	public Map<String, Object> getAjaxBlist(Integer idx,Integer startRownum, Integer category) {

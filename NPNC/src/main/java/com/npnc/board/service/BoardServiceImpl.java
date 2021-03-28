@@ -17,9 +17,6 @@ import com.npnc.board.dto.RDto;
 
 @Service
 public class BoardServiceImpl implements BoardService {
-	public void hello() {
-		System.out.println("hello");
-	}
 	@Autowired
 	private BDao dao;
 	
@@ -34,12 +31,12 @@ public class BoardServiceImpl implements BoardService {
 		param.put("pagesize", pagesize);
 		List<BDto> dtos = dao.getList(param);
 		int totalCnt = dao.getCnt(param);
-		int totalpage = totalCnt/pagesize;		//��ü �Խñ� ����/�� ������ �� �Խñ� ���� = ��ü ������ ����
-		if(totalCnt%pagesize!=0){				//�������� �ִ� ��쿡�� �� ������ �� �ʿ�
+		int totalpage = totalCnt/pagesize;		//전체 게시글 개수/한 페이지 당 게시글 개수 = 전체 페이지 개수
+		if(totalCnt%pagesize!=0){				//나머지가 있는 경우에는 한 페이지 더 필요
 			totalpage++;
 		}
-		int pagelistsize = 10;					//����������Ʈ(�Խñ۸���Ʈ �ϴܿ� �ִ� ��������ũ�� �ǹ�) �ѹ��� �������� ������ ����(�������� ������ �̸� �ʰ��ϸ� ������ư�� ������)
-		int start = (page/pagelistsize)*pagelistsize+1;	//����������Ʈ�� �����ϴ� ����
+		int pagelistsize = 10;					//페이지리스트(게시글리스트 하단에 있는 페이지링크를 의미) 한번에 보여지는 페이지 개수(총페이지 개수가 이를 초과하면 다음버튼이 생성됨)
+		int start = (page/pagelistsize)*pagelistsize+1;	//페이지리스트에 시작하는 숫자
 		if(page%pagelistsize==0){
 			start = (page/pagelistsize-1)*pagelistsize+1;
 		}
@@ -56,6 +53,7 @@ public class BoardServiceImpl implements BoardService {
 		map.put("category", category);	
 		return map;
 	}
+	
 	public Map<String, Object> getGradeList(){
 		List<GDto> result_ = dao.getGradeList();
 		HashMap<Integer, String> result = new LinkedHashMap<>();
@@ -84,6 +82,7 @@ public class BoardServiceImpl implements BoardService {
 		int result = dao.write(dto);
 		return result;
 	}
+	// 게시글 dto(좋아요, 싫어요, 댓글 개수 등) 및 해당 게시글의 카테고리, 댓글 리스트
 	public Map<String, Object> read(int idx){
 		Map<String, Object> result = new HashMap<>();
 		BDto dto = dao.read(idx);
@@ -115,6 +114,7 @@ public class BoardServiceImpl implements BoardService {
 		List<RDto> result = dao.getReplyList(idx);
 		return result;
 	}
+	
 	@Override
 	public List<RDto> getReplyList(int idx) {
 		List<RDto> result = dao.getReplyList(idx);
@@ -136,17 +136,18 @@ public class BoardServiceImpl implements BoardService {
 		int result = dao.update(dto);
 		return result;
 	}
-	
+	//조회수 증가
 	public void upHit(int idx) {
 		dao.upHit(idx);
 	}
-	
+	// 게시글 조회화면에 해당 회원이 좋아요 및 싫어요를 선택했는지 정보를 제공
 	public Map<String, Object> doGob(int idx,String id){
 		Integer goodbad = dao.doGob(idx, id);
 		Map<String, Object> result = new HashMap<>();
 		result.put("goodbad", goodbad);
 		return result;
 	}
+	
 	public BDto insertGob(int idx, String id, boolean gob) {
 		HashMap<String, Object> param = new HashMap<>();
 		param.put("idx", idx);

@@ -29,6 +29,7 @@ public class ManageController {
 	@Autowired
 	private BoardService bservice;
 	
+	//게시글 관리
 	@RequestMapping({"/","/blist"})
 	public String blist(String type,String keyword,Integer category,
 			@RequestParam(value="page",required=false,defaultValue="1")int page,
@@ -49,13 +50,13 @@ public class ManageController {
 	@RequestMapping("/move_all_pop")
 	public void move_all_pop() {
 	}
-	
+	//게시글의 카테고리 변경
 	@RequestMapping("/movecategory")
 	public String movecategory(int idx, int category) {
 		int result = service.moveCategory(idx, category);
 		return "manage/move_complete";
 	}
-	
+	//일괄 삭제
 	@RequestMapping("/onepassdel")
 	public String onepassdel(int[] del_idx, String type,String keyword,Integer category,
 			@RequestParam(value="page",required=false,defaultValue="1")int page,
@@ -87,7 +88,7 @@ public class ManageController {
 		}
 		return "redirect:/manage/blist";
 	}
-	
+	// 카테고리 관리
 	@RequestMapping("/clist")
 	public String clist(Model model) {
 		Map<String, Object> data = bservice.getGradeList();
@@ -95,6 +96,7 @@ public class ManageController {
 		model.addAttribute("clist", service.getCategoryList());
 		return "/manage/clist";
 	}
+	//메인카테고리 삭제
 	@RequestMapping("/delmainc")
 	public String delmaincategory(String name) {
 		String maincategory = "";
@@ -107,19 +109,19 @@ public class ManageController {
 		int result = service.deleteMainCategory(maincategory);
 		return "redirect:/manage/clist";
 	}
-	
+	//카테고리 삭제
 	@RequestMapping("/delc")
 	public String delCategory(int idx) {
 		int result = service.deleteCategory(idx);
 		return "redirect:/manage/clist";
 	}
-	
+	//특정 카테고리 게시글 전체 이동
 	@RequestMapping("/moveall")
 	public String moveall(@RequestParam("idx") int old, @RequestParam("category") int newca) {
 		service.moveAllCategory(newca, old);
 		return "manage/move_complete";
 	}
-	
+	//카테고리의 읽기, 쓰기권한 변경
 	@RequestMapping("/chgRWgrade")
 	@ResponseBody
 	public Map<String, Object> chgRWgrade(int idx, String rw, int grade) {
@@ -133,7 +135,7 @@ public class ManageController {
 		int result = service.chgRWgrade(idx,rw, grade);
 		return map;
 	}
-	
+	//회원등급 변경
 	@RequestMapping("/chgMemGrade")
 	@ResponseBody
 	public Map<String, Object> chgMemGrade(String id, int grade) {
@@ -142,14 +144,14 @@ public class ManageController {
 		map.put("sign", result);
 		return map;
 	}
-	
+	//카테고리 추가
 	@RequestMapping("/addcategory")
 	public String addcategory(String name, int readgrade, int writegrade, String maincategory) {
 		CDto dto = new CDto(0, maincategory, name, readgrade, writegrade,0);
 		service.addCategory(dto);
 		return "redirect:/manage/clist";
 	}
-	
+	//회원 관리
 	@RequestMapping("/mlist")
 	public String mlist(String type,String keyword,
 			@RequestParam(value="page",required=false,defaultValue="1")int page,

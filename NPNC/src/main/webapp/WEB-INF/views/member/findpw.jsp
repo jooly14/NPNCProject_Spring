@@ -134,7 +134,7 @@
     		});
     		
     		
-    		
+    		/* 입력 가능 문자 제한 */
     		$("input[class=idnum1]").on("keyup focusout",function(){
     			onlyNum($(this));
     		});

@@ -10,12 +10,13 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @ControllerAdvice
 public class CommonExceptionAdvice {
 	
+	//일반적인 예외 발생시
 	@ExceptionHandler(Exception.class)
 	public String except(Model model) {
 		model.addAttribute("msg","요청 처리에 문제가 발생했습니다");
 		return "common/error_page";
 	}
-	
+	//404 예외 발생시
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handle404(Model model) {

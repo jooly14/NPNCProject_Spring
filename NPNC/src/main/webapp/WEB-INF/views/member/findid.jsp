@@ -137,6 +137,7 @@
     <script  src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script>
     	$(function(){
+    		/* 이메일로 찾기 */
     		$("#btn2").click(function(){
 	    		$("#idnum2").val($("input[class=idnum2]").eq(0).val()+$("input[class=idnum2]").eq(1).val());
 				$("input[name=email]").val($("input[class=email2]").eq(0).val()+"@"+$("input[class=email2]").eq(1).val());
@@ -149,6 +150,7 @@
     			}
     			
     		});
+    		/* 전화번호로 찾기 */
     		$("#btn1").click(function(){
 	    		$("#idnum1").val($("input[class=idnum1]").eq(0).val()+$("input[class=idnum1]").eq(1).val());
 				$("input[name=phonenum]").val($("input[class=phonenum]").eq(0).val()+"-"+$("input[class=phonenum]").eq(1).val()+"-"+$("input[class=phonenum]").eq(2).val());
@@ -161,7 +163,7 @@
 				}
     		});
     		
-    		
+    		/* 입력 칸마다 입력할 수 있는 문자를 제한 */
     		$("input[class=email2]").eq(0).on("keyup focusout",function(){
     			noHangle($(this));
     		});

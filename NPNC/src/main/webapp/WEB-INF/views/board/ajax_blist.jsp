@@ -8,24 +8,24 @@
 	<script  src="https://code.jquery.com/jquery-latest.min.js"></script>
 	<script>
 		$(function(){
-			ajaxFnc();
-			var start;
-			var end;
-			$(document).on('click',".blist-btn",ajaxFnc);
+			ajaxFnc();	//제일 처음 리스트 가져옴
+			var start;	//시작 rownum
+			var end;	//끝 rownum
+			$(document).on('click',".blist-btn",ajaxFnc);	//게시글 리스트의 페이지 클릭시 이벤트
 			
 			function ajaxFnc() {
 				var startRownumParam ="";
 					startRownumParam = "idx="+"${dto.idx}"+"&category="+"${category}";
-				if($(this).text()==""){
+				if($(this).text()==""){									//첫 페이지 로딩시
 				}else{
 					startRownumParam += "&startRownum=";
-					 if(isNaN(Number($(this).text()))){
+					 if(isNaN(Number($(this).text()))){					//페이지 번호 아니고 이전이나 다음 선택시
 						if($(this).text()=='이전'){
 							startRownumParam += (start-2)*5;
 						}else if($(this).text()=='다음'){
 							startRownumParam += end*5;
 						}
-					}else{
+					}else{												//페이지 번호 선택시
 						startRownumParam += (((Number($(this).text())-1)*5));
 					}
 				}
@@ -94,7 +94,7 @@
 						
 					},
 					error:function(request,status,error){
-					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					    alert("작동 실패");
 					 }
 	
 				});

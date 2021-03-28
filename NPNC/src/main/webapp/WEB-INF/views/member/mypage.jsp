@@ -89,6 +89,7 @@
             		<td><input type="hidden" name="email"><input class="email" type="text" value="${fn:split(dto.email,'@')[0]}" maxlength="20">@<input class="email" value="${fn:split(dto.email,'@')[1]}" type="text" maxlength="50"></td>
             	</tr>
             	<tr>
+            	<!-- 다음 주소 api -->
             		<td><div style="padding-bottom:80px;">주소</div></td>
             		<td><input type="hidden" name="address">
             		<input type="hidden" id="sample4_postcode" placeholder="우편번호">
@@ -175,6 +176,7 @@
 			window.open('/member/del_mem_pop', '회원 탈퇴', 'top=100px,left=500px,width=350px,height=180px,scrollbars=yes');
 		});
 		
+		/* 입력문자 제한 */
 		$("input[class=email]").eq(0).on("keyup focusout",function(){
 			noHangle($(this));
 		});
@@ -201,7 +203,7 @@
 			window.open('/member/chgpw_pop', '비밀번호 변경', 'top=100px,left=500px,width=470px,height=250px,scrollbars=yes');
 		});
 	
-		
+		/* 회원 정보 수정 */
 		$("#regbtn").click(function(){
 			 $("input[name=email]").val($("input[class=email]").eq(0).val()+"@"+$("input[class=email]").eq(1).val());
 			$("input[name=phonenum]").val($("input[class=phonenum]").eq(0).val()+"-"+$("input[class=phonenum]").eq(1).val()+"-"+$("input[class=phonenum]").eq(2).val());

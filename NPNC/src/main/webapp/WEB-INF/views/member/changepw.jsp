@@ -6,12 +6,11 @@
 <meta charset="UTF-8">
 <title>비밀번호 변경 페이지</title>
 <style>
-   
-     #wrap{
-        width: 400px;
-        margin: 0 auto;
-     }
-     table {
+    #wrap{
+       width: 400px;
+       margin: 0 auto;
+    }
+    table {
       width: 400px;
       border-collapse: collapse;
       border: 1px solid lightgrey;
@@ -39,7 +38,6 @@
 </style>
 </head>
 <body>
-   
    <div id="wrap">
       <form action="/member/doChangepw" method="post">
          <table>
