@@ -6,7 +6,7 @@
 - Tomcat 8.5  
 - Servlet 3.1 / JSP 2.3
 - HTML/ CSS/ JavaScript/ Jquery
-- MariaDB
+- MariaDB 10.4
 - mybatis / commons-dbcp2 / commons-fileupload / jackson-databind 등
 ### 2. Servlet/JSP로 작성된 NPNCProject_JSP_Servlet(부동산 정보 공유 웹사이트)를 Spring Framework로 컨버팅
 ### 3. 개발인원 : 1명
