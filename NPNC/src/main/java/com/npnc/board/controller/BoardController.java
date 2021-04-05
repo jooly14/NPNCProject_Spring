@@ -118,7 +118,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/doUpdate")
-	public String doUpdate(@RequestParam(value="file", required=false)MultipartFile file,int idx,String title,String content,int category,String savedfile,HttpSession session,RedirectAttributes rAttr) {
+	public String doUpdate(@RequestParam(value="file", required=false)MultipartFile file,@RequestParam(value="noUpdatefile", required=false) String noUpdatefile,int idx,String title,String content,int category,String savedfile,HttpSession session,RedirectAttributes rAttr) {
 		BDto dto = null;
 		String contextpath = context.getRealPath("/");
 		File path = new File(contextpath,uploadpath);
@@ -127,18 +127,27 @@ public class BoardController {
 		}
 		// 기존에 저장된 파일이 있으면 무조건 삭제 후 새로 저장
 		if(savedfile!=null && !savedfile.isEmpty()) {
-			File savedfile_ = new File(path,savedfile);
-			savedfile_.delete();
-		}
-		if(file.getOriginalFilename()!=null&&!file.getOriginalFilename().isEmpty()) {
-			String uuid = UUID.randomUUID().toString();
-			try {
-				file.transferTo(new File(path.getAbsolutePath(),uuid+"_"+file.getOriginalFilename()));
-			} catch (IllegalStateException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(file!=null) {
+				File savedfile_ = new File(path,savedfile);
+				savedfile_.delete();
 			}
-			dto = new BDto(idx, title, (String)session.getAttribute("id"), content, null, 0, file.getOriginalFilename(),uuid+"_"+file.getOriginalFilename(), category, 0, 0, null, 0);
+		}
+		if(file!=null) {
+			if(file.getOriginalFilename()!=null&&!file.getOriginalFilename().isEmpty()) {
+				String uuid = UUID.randomUUID().toString();
+				try {
+					file.transferTo(new File(path.getAbsolutePath(),uuid+"_"+file.getOriginalFilename()));
+				} catch (IllegalStateException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				dto = new BDto(idx, title, (String)session.getAttribute("id"), content, null, 0, file.getOriginalFilename(),uuid+"_"+file.getOriginalFilename(), category, 0, 0, null, 0);
+				
+			}else {
+				dto = new BDto(idx, title, (String)session.getAttribute("id"), content, null, 0, null ,null, category, 0, 0, null, 0);
+			}
+		}else if(noUpdatefile!=null){
+			dto = new BDto(idx, title, (String)session.getAttribute("id"), content, null, 0, noUpdatefile ,savedfile, category, 0, 0, null, 0);
 		}else {
 			dto = new BDto(idx, title, (String)session.getAttribute("id"), content, null, 0, null ,null, category, 0, 0, null, 0);
 		}

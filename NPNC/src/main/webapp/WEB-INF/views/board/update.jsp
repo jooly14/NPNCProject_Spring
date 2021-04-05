@@ -98,7 +98,7 @@
 					<input type="file" name="file">
 				</c:if>
 				<c:if test="${!empty dto.file}">
-					<span id="file">${dto.file}<input id="file-del" type="button" value="삭제"></span>
+					<span id="file">${dto.file}<input type="hidden" value="${dto.file}" name="noUpdatefile"><input id="file-del" type="button" value="삭제"></span>
 				</c:if>
 				</td>
 			</tr>
